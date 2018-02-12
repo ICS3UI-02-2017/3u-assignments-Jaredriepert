@@ -38,7 +38,7 @@ public class RobotExample {
         buddy.setColor(Color.black);
                 
          
-        //move robot forward x space(s)
+        //check to pick something up, otherwise move forward
         while(buddy.frontIsClear()){
         if(buddy.canPickThing())
         {buddy.pickThing();
@@ -46,6 +46,7 @@ public class RobotExample {
             buddy.move(1);
             }
         }    
+        
     
         
         
