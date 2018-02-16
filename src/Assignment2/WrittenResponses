@@ -1,0 +1,14 @@
+1. Assume the robot is on intersection (1, 5) facing north.
+   There is a Wall immediately in front of it.
+    a) true
+    b) true
+    c) false
+    d) false
+    e) false
+    f) true
+    g) true
+
+2. The two statements will give you the same outcome. This is because the first one is asking
+if karel can pick up something turn right, if he can not turn left. Statement two say the inverse
+but then switches the turning therefor making it the same. It says if karel can not pick up something
+turn left, if he can turn right. They are the same. 

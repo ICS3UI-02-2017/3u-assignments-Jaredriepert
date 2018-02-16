@@ -55,7 +55,7 @@ public class A1Q1 {
                 buddy.move(1);
             } else {
                 buddy.turnRight(1);
-
+                
             }
         }
         
