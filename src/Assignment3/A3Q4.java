@@ -64,31 +64,16 @@ public class A3Q4 {
 
         //move buddy around each square in a pattern that will end him up where he started
         //set up the move counter and the round counter
-        int moves = 12;
-        int rounds = 0;
-        //while buddy has not gone around all the squares
-        while (rounds <4) {
-            //move around them
-            for (moves = moves; moves > 0; moves -= 1) {
-                buddy.turnLeft();
-                if (buddy.frontIsClear()) {
-                    buddy.move();
-                } else {
-                    buddy.turnRight();
-                    buddy.move();
-                }
-            }
-            //once the number of moves is all done, move once to the next square and reset the move counter but add one to the round 
-            if (moves == 0) {
-                buddy.move();
-                moves = 11;
-                rounds +=1;
-            }            
-        }
-        if(rounds==4){
-            buddy.turnAround();
-            buddy.move();
+        int moves = 4;
+        //move buddy around a square and remove one from moves once done, only allow him to move around 4 sqaures
+        for (moves = moves; moves > 0; moves -= 1) {
+            buddy.move(3);
             buddy.turnLeft();
+            buddy.move(3);
+            buddy.turnLeft();
+            buddy.move(3);
+            buddy.turnLeft();
+            buddy.move(3);
         }
     }
 }
