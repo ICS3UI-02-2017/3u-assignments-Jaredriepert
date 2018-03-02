@@ -69,16 +69,42 @@ public class A4Q5 {
         
         //blank line
         System.out.println();
+        //determin each test percentage and round it to 2 decimal places        
+        double mark1=(test1In/test1Out*100);
+        mark1 = mark1*100;
+        mark1 = Math.round(mark1);
+        mark1 = mark1/100;
         
-        System.out.println("Test 1: " +test1In/test1Out*100+"%");
-        System.out.println("Test 2: " +test2In/test2Out*100+"%");
-        System.out.println("Test 3: " +test3In/test3Out*100+"%");
-        System.out.println("Test 4: " +test4In/test4Out*100+"%");
-        System.out.println("Test 5: " +test5In/test5Out*100+"%");
+        double mark2=(test2In/test2Out*100);
+        mark2 = mark2*100;
+        mark2 = Math.round(mark2);
+        mark2 = mark2/100;
+        
+        double mark3=(test3In/test3Out*100);
+        mark3 = mark3*100;
+        mark3 = Math.round(mark3);
+        mark3 = mark3/100;
+        
+        double mark4=(test4In/test4Out*100);
+        mark4 = mark4*100;
+        mark4 = Math.round(mark4);
+        mark4 = mark4/100;
+        
+        double mark5=(test5In/test5Out*100);
+        mark5 = mark5*100;
+        mark5 = Math.round(mark5);
+        mark5 = mark5/100;
+        
+        //present the test marks 
+        System.out.println("Test 1: " +mark1+"%");
+        System.out.println("Test 2: " +mark2+"%");
+        System.out.println("Test 3: " +mark3+"%");
+        System.out.println("Test 4: " +mark4+"%");
+        System.out.println("Test 5: " +mark5+"%");
         
         //blank line
         System.out.println();
         
-        System.out.println("Average: "+(test1In+test2In+test3In+test4In+test5In)/(test1Out+test2Out+test3Out+test4Out+test5Out)*100+"%");
+        System.out.println("Average: "+(mark1+mark2+mark3+mark4+mark5)/5+"%");
     }
 }
