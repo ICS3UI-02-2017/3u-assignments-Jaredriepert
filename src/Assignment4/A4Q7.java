@@ -28,22 +28,45 @@ public class A4Q7 {
         int p1Spot = 1;
         int p2Spot = 1;
         while (true) {
+            //when it is players one turn let him/her role
             while (turn == 1) {
                 System.out.print(p1 + " enter dice count: ");
                 int diceCount = input.nextInt();
                 if (diceCount == 0) {
                     //terminate
-                } else if (diceCount == 1 || diceCount > 12) {
+                }
+                if (diceCount == 1 || diceCount > 12) {
                     System.out.print("Invalid number, please try again:");
                     diceCount = input.nextInt();
-                } else if (diceCount >= 2 && diceCount <= 12) {
+                }
+                if (diceCount >= 2 && diceCount <= 12) {
                     p1Spot = p1Spot + diceCount;
-                    if(p1Spot==9){
-                        p1Spot=34;                        
+                    //if you land on a latter go up
+                    if (p1Spot == 9) {
+                        p1Spot = 34;
+                    } else if (p1Spot == 40) {
+                        p1Spot = 64;
+                    } else if (p1Spot == 67) {
+                        p1Spot = 86;
+                    } else if (p1Spot == 67) {
+                        p1Spot = 86;
+                        //if you land on a snake go down
+                    } else if (p1Spot == 99) {
+                        p1Spot = 77;
+                    } else if (p1Spot == 90) {
+                        p1Spot = 48;
+                    } else if (p1Spot == 54) {
+                        p1Spot = 19;
                     }
+                    //if you are on spot 100 you win
+                    if (p1Spot == 100) {
+                        System.out.println(p1 + " Wins! ");
+                        System.out.println(p2 + " lost on space " + p2Spot);
+                    } else {
                     System.out.println(p1 + " is now on space " + p1Spot);
                     System.out.println(p2 + " is on space " + p2Spot);
-                }               
+                }
+                }
                 turn = 2;
             }
             while (turn == 2) {
@@ -51,13 +74,37 @@ public class A4Q7 {
                 int diceCount = input.nextInt();
                 if (diceCount == 0) {
                     //terminate
-                } else if (diceCount == 1 || diceCount > 12) {
+                }
+                if (diceCount == 1 || diceCount > 12) {
                     System.out.print("Invalid number, please try again:");
                     diceCount = input.nextInt();
-                } else if (diceCount >= 2 && diceCount <= 12) {
+                }
+                if (diceCount >= 2 && diceCount <= 12) {
                     p2Spot = p2Spot + diceCount;
-                    System.out.println(p2 + " is now on space " + p2Spot);
-                    System.out.println(p1 + " is on space " + p1Spot);
+                    if (p2Spot == 9) {
+                        p2Spot = 34;
+                    } else if (p2Spot == 40) {
+                        p2Spot = 64;
+                    } else if (p2Spot == 67) {
+                        p2Spot = 86;
+                    } else if (p2Spot == 67) {
+                        p2Spot = 86;
+                        //if you land on a snake go down
+                    } else if (p2Spot == 99) {
+                        p2Spot = 77;
+                    } else if (p2Spot == 90) {
+                        p2Spot = 48;
+                    } else if (p2Spot == 54) {
+                        p2Spot = 19;
+                    }
+                    //if they are on spot 100 they win
+                    if (p2Spot == 100) {
+                        System.out.println(p2 + " Wins! ");
+                        System.out.println(p1 + " lost on space " + p1Spot);
+                    } else {
+                        System.out.println(p2 + " is now on space " + p2Spot);
+                        System.out.println(p1 + " is on space " + p1Spot);
+                    }
                 }
                 turn = 1;
             }
