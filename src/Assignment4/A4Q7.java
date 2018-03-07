@@ -22,14 +22,19 @@ public class A4Q7 {
         String p1 = input.nextLine();
         System.out.print("Enter Player 2's name:");
         String p2 = input.nextLine();
+        while (p2.equals(p1)) {
+            p2 = "";
+            System.out.print("Name already taken, please try again:");
+            p2 = input.nextLine();
+        }
 
         //while it is player ones turn he/she will role the dice
         int turn = 1;
         int p1Spot = 1;
         int p2Spot = 1;
         int winner = 0;
-        
-        while (winner==0) {
+
+        while (winner == 0) {
             //when it is players one turn let him/her role
             while (turn == 1) {
                 System.out.print(p1 + " enter dice count: ");
@@ -73,7 +78,8 @@ public class A4Q7 {
                     if (p1Spot == 100) {
                         System.out.println(p1 + " Wins! ");
                         System.out.println(p2 + " lost on space " + p2Spot);
-                        winner=1;
+                        winner = 1;
+                        System.exit(0);
                     } else {
                         System.out.println(p1 + " is now on space " + p1Spot);
                         System.out.println(p2 + " is on space " + p2Spot);
@@ -125,13 +131,14 @@ public class A4Q7 {
                     if (p2Spot == 100) {
                         System.out.println(p2 + " Wins! ");
                         System.out.println(p1 + " lost on space " + p1Spot);
-                        winner=1;
+                        winner = 1;
+                        System.exit(0);
                     } else {
                         System.out.println(p2 + " is now on space " + p2Spot);
                         System.out.println(p1 + " is on space " + p1Spot);
                         System.out.println("------------------------------");
                         System.out.println("");
-                        
+
                     }
                 }
                 turn = 1;
