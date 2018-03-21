@@ -20,11 +20,12 @@ public class A5 {
      */
     public static void main(String[] args) {
         Scanner input = new Scanner(System.in);
-        //what is the text you want to translate?
+        while(true){        
+            System.out.println();
+            System.out.println("----------------------------------");
         System.out.println("Please enter text to be translated:");
-        CharSequence text = input.nextLine();
-        //show them their original text
-        System.out.println(text);
+        //what is the text you want to translate?
+        CharSequence text = input.nextLine();        
         //the regex pattern
         Pattern p = Pattern.compile("(?i)[aeiou]+");
         Matcher m = p.matcher(text);
@@ -39,5 +40,6 @@ public class A5 {
         m.appendTail(bufStr);
         String result = bufStr.toString();
         System.out.println(result);
+        }
     }
 }
