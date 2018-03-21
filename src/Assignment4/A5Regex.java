@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
  *
  * @author riepj9547
  */
-public class A5 {
+public class A5Regex {
 
     /**
      * @param args the command line arguments
