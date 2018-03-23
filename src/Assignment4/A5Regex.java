@@ -40,9 +40,8 @@ public class A5Regex {
             String result = bufStr.toString();
             System.out.println(result);
             System.out.println("Would you like to translate it back to English?  Yes or No?");
-            String answer = input.nextLine();
-            answer.toLowerCase();
-            if (answer.contentEquals("yes")) {
+            String answer = input.nextLine();            
+            if (answer.equalsIgnoreCase("yes")) {
                 text = result;
                 p = Pattern.compile("(?i)ub([aieou])");
                 m = p.matcher(text);

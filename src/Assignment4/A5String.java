@@ -47,8 +47,7 @@ public class A5String {
             System.out.println(newWord);
             System.out.println("Would you like to translate this back into English?  Yes or No?");
             String answer = input.nextLine();
-            answer.toLowerCase();
-            if (answer.contentEquals("yes")) {
+            if (answer.equalsIgnoreCase("yes")) {
                 pattern = "u";
                 String pattern2 = "b";
                 origword = newWord;
