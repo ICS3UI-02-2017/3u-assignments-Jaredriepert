@@ -64,7 +64,7 @@ public class A5String {
                             newWord = newWord + origword.charAt(i);
                         }
 
-                    }else{
+                    } else {
                         newWord = newWord + origword.charAt(i);
                     }
                 }

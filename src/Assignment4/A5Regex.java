@@ -40,20 +40,20 @@ public class A5Regex {
             String result = bufStr.toString();
             System.out.println(result);
             System.out.println("Would you like to translate it back to English?  Yes or No?");
-            String answer = input.nextLine();            
+            String answer = input.nextLine();
             if (answer.equalsIgnoreCase("yes")) {
                 text = result;
-                p = Pattern.compile("(?i)ub([aieou])");
+                p = Pattern.compile("ub([aieou])");
                 m = p.matcher(text);
                 bufStr = new StringBuffer();
                 flag = false;
                 while (flag = m.find()) {
-                String rep = m.group();
-                m.appendReplacement(bufStr, "" + m.group(1));
-            }
-            m.appendTail(bufStr);
-            result = bufStr.toString();
-            System.out.println(result);
+                    String rep = m.group();
+                    m.appendReplacement(bufStr, "" + m.group(1));
+                }
+                m.appendTail(bufStr);
+                result = bufStr.toString();
+                System.out.println(result);
             }
         }
 
