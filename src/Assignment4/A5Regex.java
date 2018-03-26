@@ -28,7 +28,7 @@ public class A5Regex {
             //the regex pattern
             Pattern p = Pattern.compile("(?i)[aeiou]+");
             Matcher m = p.matcher(text);
-            //some crazy stuff
+            //new buff string that will hold the new text
             StringBuffer bufStr = new StringBuffer();
             boolean flag = false;
             //while it finds the regex pattern replace it with "ub" followed up by the pattern it just found
@@ -37,6 +37,7 @@ public class A5Regex {
                 m.appendReplacement(bufStr, "ub" + m.group());
             }
             m.appendTail(bufStr);
+            //set the result text to the buff text
             String result = bufStr.toString();
             System.out.println(result);
             System.out.println("Would you like to translate it back to English?  Yes or No?");
