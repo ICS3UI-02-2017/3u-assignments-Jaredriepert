@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package Assignment4;
+package Assignment5;
 
 import java.util.Scanner;
 import java.util.regex.Matcher;

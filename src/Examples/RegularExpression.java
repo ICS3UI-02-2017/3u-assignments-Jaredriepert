@@ -18,8 +18,7 @@ public class RegularExpression {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-
-        Scanner input = new Scanner(System.in);
+        Scanner input = new Scanner(System.in);        
         while (true) {
             System.out.println();
             System.out.println("----------------------------------");
@@ -27,9 +26,8 @@ public class RegularExpression {
             //what is the text you want to translate?
             CharSequence text = input.nextLine();
             //the regex pattern
-            Pattern p = Pattern.compile("[\\w]+(@)[a-z]+[.](com||ca)");
-            Matcher m = p.matcher(text);
-            //some crazy stuff            
+            Pattern p = Pattern.compile("[\\w]+(.?)(^@)[\\w?]+(@)[a-z]+[.](com||ca)");
+            Matcher m = p.matcher(text);                 
             boolean flag = false;
             //while it finds the regex pattern replace it with "ub" followed up by the pattern it just found
             while (flag = m.find()) {
