@@ -10,7 +10,7 @@ import java.util.Scanner;
  *
  * @author riepj9547
  */
-public class A6Q5 {
+public class A6Q6 {
 
     /**
      * @param args the command line arguments
@@ -18,14 +18,14 @@ public class A6Q5 {
     public static void main(String[] args) {
         // create array
         Scanner input = new Scanner(System.in);
-        System.out.println("How many marks are there?");
+        System.out.println("How many students are there in your class?");
         int[] marks = new int[input.nextInt()];
         //fill the array with the marks
-        System.out.println("Please enter these marks");
+        System.out.println("Please enter in all their marks");
         for (int i = 0; i < marks.length; i++) {
             marks[i] = input.nextInt();
         }
-        //begin sorting
+        //begin sorting for lostest and highest marks
         int x = 0;
         int y = 1;
         int replace = 0;
@@ -40,22 +40,15 @@ public class A6Q5 {
             }
             x++;
         }
-        //print out all the numbers in the new order
-        System.out.print("The marks in order are... ");
+        //find the average mark
+        int average = 0;
         for (int i = 0; i < marks.length; i++) {
-            System.out.print(marks[i] + " ");
-        }
-        System.out.print("The median of the marks is... ");
-        //if the length of the array is even take the two middle numbers and find the average
-        if (marks.length % 2 == 0 ) {
-            int firstMed = (marks.length) / 2;
-            int secondMed = (marks.length / 2) - 1;
-            int newMed = (marks[firstMed] + marks[secondMed]) / 2;            
-            System.out.println(newMed);
-            //if the length is odd just take the middle number
-        } else if (marks.length != 2) {
-            System.out.print(marks[marks.length / 2]);
-            
-        }
+            average = average + marks[i];
+        }       
+        average= average/marks.length;
+        //display it all nicely 
+        System.out.println("The lowest mark of the class is "+marks[0]);
+        System.out.println("the highest mark of the class is "+marks[marks.length-1]);
+        System.out.println("The average mark was "+average);
     }
 }
