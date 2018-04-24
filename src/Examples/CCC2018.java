@@ -90,9 +90,9 @@ public class CCC2018 {
         }
         
         //choose where to put the starting spot
-      //  int fX = rand.nextInt(x - 2) + 1;
-       // int fY = rand.nextInt(y - 2) + 1;
-       // grid[fX][fY] = 8;
+        int fX = rand.nextInt(x - 2) + 1;
+        int fY = rand.nextInt(y - 2) + 1;
+        grid[fX][fY] = 8;
 
         //print out the grid 
         for (int i = 0; i < y; i++) {
@@ -129,7 +129,7 @@ public class CCC2018 {
     }
 
 public static int checkspot(int targetX,int targetY,int[][] grid, int[][]bufgrid){
-    int moves = 1;
+    int moves = 1;   
             for (int i = 1; i < 4; i++) {
             if(i==1){
                 //if the spot above the starting space is empty check if its possible
