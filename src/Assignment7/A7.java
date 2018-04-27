@@ -180,10 +180,5 @@ public class A7 {
         int num = 87931;
         boolean oddNum = allDigitsOdd(87931);        
         System.out.println(num + " is odd? " + oddNum);
-
-
-
-
-
     }
 }
