@@ -4,6 +4,7 @@
  */
 package Examples;
 
+import java.awt.Point;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -76,7 +77,7 @@ public class CCC2018 {
                 grid[camX][camY] = 2;
             }
         }
-        
+
         //Choose where to put random walls
         int walls = rand.nextInt(((x - 2) * (y - 2)) / 2) + 2;
         int wallX = 0;
@@ -88,8 +89,8 @@ public class CCC2018 {
                 grid[wallX][wallY] = 1;
             }
         }
-        
-        //choose where to put the starting spot
+
+        //choose where to put the finish spot
         int fX = rand.nextInt(x - 2) + 1;
         int fY = rand.nextInt(y - 2) + 1;
         grid[fX][fY] = 8;
@@ -113,39 +114,66 @@ public class CCC2018 {
                     System.out.print("R ");
                 } else if (grid[j][i] == 7) {
                     System.out.print("S ");
-                }else if (grid[j][i] == 8) {
+                } else if (grid[j][i] == 8) {
                     System.out.print("F ");
                 }
 
             }
+            System.out.println("\n");
+        }
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                System.out.println(moveGrid[i][j] + "");
+            }
             System.out.println("");
         }
-        int targetX=sX;
-        int targetY=sY;
-        
-            
-        
-        
+        int targetX = sX;
+        int targetY = sY;
+
+
+
+
     }
 
-public static int checkspot(int targetX,int targetY,int[][] grid, int[][]bufgrid){
-    int moves = 1;   
-            for (int i = 1; i < 4; i++) {
-            if(i==1){
-                //if the spot above the starting space is empty check if its possible
-                if(grid[targetX][targetY-1]==0){
-                    targetX=targetX;
-                    targetY=targetY-1;
-                    //if all spots next to this spot is not a camera then it is possible
-                    if(grid[targetX][targetY-1]!=2&&grid[targetX-1][targetY]!=2&&grid[targetX+1][targetY]!=2){
-                        bufgrid[targetX][targetY]=1;
-                        bufgrid[targetX][targetY]=moves;
+    public static int[][] checkspot(int targetX, int targetY, int x, int y) {
+        int moves = 0;
+        int[][] moveGrid = new int[x][y];
+        Point[] selected = new Point[x * y];
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                moveGrid[i][j] = 999;
+            }
+        }
+        moveGrid[targetX][targetY] = 0;
+
+        for (int i = 0; i < x; i++) {
+            for (int j = 0; j < y; j++) {
+                if(moveGrid[i][j] == moves){
+                    for(int k = 0; k < 4; k++){
+                        if(k==0){
+                            targetX = i;
+                            targetY = j;
+                            
+                        }
                     }
                 }
             }
-            
-                
         }
-    return 0;
+        if (i == 1) {
+            //if the spot above the starting space is empty check if its possible
+            if (grid[targetX][targetY - 1] == 0) {
+                targetX = targetX;
+                targetY = targetY - 1;
+                //if all spots next to this spot is not a camera then it is possible
+                if (grid[targetX][targetY - 1] != 2 && grid[targetX - 1][targetY] != 2 && grid[targetX + 1][targetY] != 2) {
+                    bufgrid[targetX][targetY] = 1;
+                    bufgrid[targetX][targetY] = moves;
+                }
+            }
+        }
+
+
+
+        return moveGrid;
+    }
 }
-        }
