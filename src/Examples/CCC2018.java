@@ -28,7 +28,7 @@ public class CCC2018 {
         // create array
         int grid[][] = new int[x][y];
         //create the refernce array
-        int bufgrid[][] = new int[x][y];
+        int moveGrid[][] = new int[x][y];
         //create the walls around the grid
         for (int i = 0; i < y; i++) {
             grid[0][i] = 1;
@@ -119,61 +119,72 @@ public class CCC2018 {
                 }
 
             }
-            System.out.println("\n");
-        }
-        for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {
-                System.out.println(moveGrid[i][j] + "");
-            }
             System.out.println("");
         }
-        int targetX = sX;
-        int targetY = sY;
-
-
+        
+        int moves = 0;
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                if(grid[j][i]==0){
+                    moveGrid[j][i] = 999;
+                }else{
+                    moveGrid[j][i] = -1;
+                }
+            }
+        }
+        if(moves==0){
+        moveGrid[sX][sY] = 0; 
+        }
+        moveGrid = checkspot(moveGrid, grid, x, y, 0);
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                System.out.print(moveGrid[j][i] + " ");
+            }
+            System.out.println("");
+        } 
 
 
     }
 
-    public static int[][] checkspot(int targetX, int targetY, int x, int y) {
-        int moves = 0;
-        int[][] moveGrid = new int[x][y];
-        Point[] selected = new Point[x * y];
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                moveGrid[i][j] = 999;
-            }
-        }
-        moveGrid[targetX][targetY] = 0;
-
-        for (int i = 0; i < x; i++) {
-            for (int j = 0; j < y; j++) {
-                if(moveGrid[i][j] == moves){
-                    for(int k = 0; k < 4; k++){
-                        if(k==0){
-                            targetX = i;
-                            targetY = j;
-                            
+    public static int[][] checkspot(int[][] moveGrid, int[][] grid, int x, int y, int moves) {
+           
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {                
+                if (moveGrid[j][i] == moves) {                    
+                    for (int k = 0; k < 4; k++) {                        
+                        if (k == 0) {
+                            if (grid[i][j-1] == 0 && grid[i][j - 2] != 2 && grid[i - 1][j - 1] != 2 && grid[i + 1][j - 1] != 2) {
+                                if (moveGrid[i][j - 1] > moves+1) {
+                                    moveGrid[i][j - 1] = moves+1;
+                                }
+                            }
+                        }
+                        if (k == 1) {
+                            if (grid[i+1][j] == 0 && grid[i + 2][j] != 2 && grid[i + 1][j - 1] != 2 && grid[i + 1][j + 1] != 2) {
+                                if(moveGrid[i + 1][j] > moves+1){
+                                    moveGrid[i + 1][j] = moves+1;
+                                }
+                            }
+                        }
+                        if (k == 2) {
+                            if (grid[i][j+1] == 0 && grid[i][j + 2] != 2 && grid[i + 1][j + 1] != 2 && grid[i - 1][j + 1] != 2) {
+                                if(moveGrid[i][j + 1] > moves+1){
+                                    moveGrid[i][j + 1] = moves+1;
+                                }
+                            }
+                        }
+                        if (k == 3) {
+                            if (grid[i-1][j] == 0 && grid[i - 2][j] != 2 && grid[i - 1][j + 1] != 2 && grid[i - 1][j - 1] != 2) {
+                                if(moveGrid[i - 1][j] > moves+1){
+                                    moveGrid[i - 1][j] = moves+1;                                    
+                                }
+                            }
                         }
                     }
                 }
             }
-        }
-        if (i == 1) {
-            //if the spot above the starting space is empty check if its possible
-            if (grid[targetX][targetY - 1] == 0) {
-                targetX = targetX;
-                targetY = targetY - 1;
-                //if all spots next to this spot is not a camera then it is possible
-                if (grid[targetX][targetY - 1] != 2 && grid[targetX - 1][targetY] != 2 && grid[targetX + 1][targetY] != 2) {
-                    bufgrid[targetX][targetY] = 1;
-                    bufgrid[targetX][targetY] = moves;
-                }
-            }
-        }
-
-
-
+        }        
+        
         return moveGrid;
     }
 }
