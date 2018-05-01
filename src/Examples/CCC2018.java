@@ -88,12 +88,7 @@ public class CCC2018 {
             if (sX != wallX && sY != wallY) {
                 grid[wallX][wallY] = 1;
             }
-        }
-
-        //choose where to put the finish spot
-        int fX = rand.nextInt(x - 2) + 1;
-        int fY = rand.nextInt(y - 2) + 1;
-        grid[fX][fY] = 8;
+        }        
 
         //print out the grid 
         for (int i = 0; i < y; i++) {
@@ -121,69 +116,159 @@ public class CCC2018 {
             }
             System.out.println("");
         }
-        
+// set all possible move spots to infinit (999)
         int moves = 0;
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
-                if(grid[j][i]==0){
+                if (grid[j][i] == 0) {
                     moveGrid[j][i] = 999;
-                }else{
+                } else {
                     moveGrid[j][i] = -1;
                 }
             }
         }
-        if(moves==0){
-        moveGrid[sX][sY] = 0; 
-        }
+        //set the starting spot at 0 moves
+        moveGrid[sX][sY] = 0;
+        //call the checkspot function
         moveGrid = checkspot(moveGrid, grid, x, y, 0);
+
+        //print out the move grid
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 System.out.print(moveGrid[j][i] + " ");
             }
             System.out.println("");
-        } 
+        }
 
+//print out the 3rd grid 
+        for (int i = 0; i < y; i++) {
+            for (int j = 0; j < x; j++) {
+                if (grid[j][i] == 0) {
+                    if(moveGrid[j][i]<999){
+                        System.out.print(moveGrid[j][i]+" ");
+                    }else{
+                        System.out.print(". ");
+                    }
+                       
+                } else if (grid[j][i] == 1) {
+                    System.out.print("W ");
+                } else if (grid[j][i] == 2) {
+                    System.out.print("C ");
+                } else if (grid[j][i] == 3) {
+                    System.out.print("U ");
+                } else if (grid[j][i] == 4) {
+                    System.out.print("D ");
+                } else if (grid[j][i] == 5) {
+                    System.out.print("L ");
+                } else if (grid[j][i] == 6) {
+                    System.out.print("R ");
+                } else if (grid[j][i] == 7) {
+                    System.out.print("S ");
+                } else if (grid[j][i] == 8) {
+                    System.out.print("F ");
+                }
 
+            }
+            System.out.println("");
+        }
     }
 
     public static int[][] checkspot(int[][] moveGrid, int[][] grid, int x, int y, int moves) {
-           
+
         for (int i = 0; i < y; i++) {
-            for (int j = 0; j < x; j++) {                
-                if (moveGrid[j][i] == moves) {                    
-                    for (int k = 0; k < 4; k++) {                        
+            for (int j = 0; j < x; j++) {
+                if (moveGrid[j][i] == moves) {
+                    for (int k = 0; k < 4; k++) {
                         if (k == 0) {
-                            if (grid[i][j-1] == 0 && grid[i][j - 2] != 2 && grid[i - 1][j - 1] != 2 && grid[i + 1][j - 1] != 2) {
-                                if (moveGrid[i][j - 1] > moves+1) {
-                                    moveGrid[i][j - 1] = moves+1;
+                            if (grid[j][i - 1] == 0 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2) {
+                                if (moveGrid[j][i - 1] > moves + 1) {
+                                    moveGrid[j][i - 1] = moveGrid[j][i] + 1;
+                                    
                                 }
+                            }
+                            if (grid[j][i-1]==3 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
+                                moveGrid[j][i - 2] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j][i-1]==4 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
+                                moveGrid[j][i] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j][i-1]==5 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
+                                moveGrid[j-1][i - 1] = moveGrid[j][i + 1];
+                            }
+                            if (grid[j][i-1]==6 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
+                                moveGrid[j+1][i - 1] = moveGrid[j][i] + 1;
                             }
                         }
                         if (k == 1) {
-                            if (grid[i+1][j] == 0 && grid[i + 2][j] != 2 && grid[i + 1][j - 1] != 2 && grid[i + 1][j + 1] != 2) {
-                                if(moveGrid[i + 1][j] > moves+1){
-                                    moveGrid[i + 1][j] = moves+1;
+                            if (grid[j + 1][i] == 0 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
+                                if (moveGrid[j + 1][i] > moves + 1) {
+                                    moveGrid[j + 1][i] = moveGrid[j][i] + 1;
+                                    
                                 }
+                            }
+                            if (grid[j + 1][i] == 3 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
+                                moveGrid[j + 1][i-1] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j + 1][i] == 4 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
+                                moveGrid[j + 1][i+1] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j + 1][i] == 5 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
+                                moveGrid[j ][i] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j + 1][i] == 6 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
+                                moveGrid[j + 2][i] = moveGrid[j][i] + 1;
                             }
                         }
                         if (k == 2) {
-                            if (grid[i][j+1] == 0 && grid[i][j + 2] != 2 && grid[i + 1][j + 1] != 2 && grid[i - 1][j + 1] != 2) {
-                                if(moveGrid[i][j + 1] > moves+1){
-                                    moveGrid[i][j + 1] = moves+1;
+                            if (grid[j][i + 1] == 0 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
+                                if (moveGrid[j][i + 1] > moves + 1) {
+                                    moveGrid[j][i + 1] = moveGrid[j][i] + 1;
+                                    
                                 }
+                            }
+                            if (grid[j][i + 1] == 3 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
+                                moveGrid[j][i] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j][i + 1] == 4 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
+                                moveGrid[j][i + 2] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j][i + 1] == 5 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
+                                moveGrid[j-1][i + 1] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j][i + 1] == 6 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
+                                moveGrid[j+1][i + 1] = moveGrid[j][i] + 1;
                             }
                         }
                         if (k == 3) {
-                            if (grid[i-1][j] == 0 && grid[i - 2][j] != 2 && grid[i - 1][j + 1] != 2 && grid[i - 1][j - 1] != 2) {
-                                if(moveGrid[i - 1][j] > moves+1){
-                                    moveGrid[i - 1][j] = moves+1;                                    
+                            if (grid[j - 1][i] == 0 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
+                                if (moveGrid[j - 1][i] > moves + 1) {
+                                    moveGrid[j - 1][i] = moveGrid[j][i] + 1;
+                                    
                                 }
+                            }
+                            if (grid[j - 1][i] == 3 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
+                                moveGrid[j - 1][i-1] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j - 1][i] == 4 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
+                                moveGrid[j - 1][i+1] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j - 1][i] == 5 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
+                                moveGrid[j - 2][i] = moveGrid[j][i] + 1;
+                            }
+                            if (grid[j - 1][i] == 6 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
+                                moveGrid[j][i] = moveGrid[j][i] + 1;
                             }
                         }
                     }
                 }
+                
             }
-        }        
+            
+        }
+        if(moves<x*y){
+            
+            moveGrid = checkspot(moveGrid, grid, x, y, ++moves);
+        }
         
         return moveGrid;
     }
