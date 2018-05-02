@@ -88,7 +88,7 @@ public class CCC2018 {
             if (sX != wallX && sY != wallY) {
                 grid[wallX][wallY] = 1;
             }
-        }        
+        }
 
         //print out the grid 
         for (int i = 0; i < y; i++) {
@@ -144,12 +144,12 @@ public class CCC2018 {
         for (int i = 0; i < y; i++) {
             for (int j = 0; j < x; j++) {
                 if (grid[j][i] == 0) {
-                    if(moveGrid[j][i]<999){
-                        System.out.print(moveGrid[j][i]+" ");
-                    }else{
+                    if (moveGrid[j][i] < 999) {
+                        System.out.print(moveGrid[j][i] + " ");
+                    } else {
                         System.out.print(". ");
                     }
-                       
+
                 } else if (grid[j][i] == 1) {
                     System.out.print("W ");
                 } else if (grid[j][i] == 2) {
@@ -179,97 +179,106 @@ public class CCC2018 {
             for (int j = 0; j < x; j++) {
                 if (moveGrid[j][i] == moves) {
                     for (int k = 0; k < 4; k++) {
+                        //check up
                         if (k == 0) {
                             if (grid[j][i - 1] == 0 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2) {
                                 if (moveGrid[j][i - 1] > moves + 1) {
                                     moveGrid[j][i - 1] = moveGrid[j][i] + 1;
-                                    
+
                                 }
                             }
-                            if (grid[j][i-1]==3 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
+                            //up escalator
+                            if (grid[j][i - 1] == 3 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2) {
                                 moveGrid[j][i - 2] = moveGrid[j][i] + 1;
                             }
-                            if (grid[j][i-1]==4 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
-                                moveGrid[j][i] = moveGrid[j][i] + 1;
+                            //left escalator
+                            if (grid[j][i - 1] == 5 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2) {
+                                moveGrid[j - 1][i - 1] = moveGrid[j][i + 1];
                             }
-                            if (grid[j][i-1]==5 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
-                                moveGrid[j-1][i - 1] = moveGrid[j][i + 1];
-                            }
-                            if (grid[j][i-1]==6 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2){
-                                moveGrid[j+1][i - 1] = moveGrid[j][i] + 1;
+                            //right escalator
+                            if (grid[j][i - 1] == 6 && grid[j][i - 2] != 2 && grid[j - 1][i - 1] != 2 && grid[j + 1][i - 1] != 2) {
+                                moveGrid[j + 1][i - 1] = moveGrid[j][i] + 1;
                             }
                         }
+                        //check right
                         if (k == 1) {
                             if (grid[j + 1][i] == 0 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
                                 if (moveGrid[j + 1][i] > moves + 1) {
                                     moveGrid[j + 1][i] = moveGrid[j][i] + 1;
-                                    
+
                                 }
                             }
+                            //up escalator
                             if (grid[j + 1][i] == 3 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
-                                moveGrid[j + 1][i-1] = moveGrid[j][i] + 1;
+                                moveGrid[j + 1][i - 1] = moveGrid[j][i] + 1;
                             }
+                            //down escalator
                             if (grid[j + 1][i] == 4 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
-                                moveGrid[j + 1][i+1] = moveGrid[j][i] + 1;
+                                moveGrid[j + 1][i + 1] = moveGrid[j][i] + 1;
                             }
-                            if (grid[j + 1][i] == 5 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
-                                moveGrid[j ][i] = moveGrid[j][i] + 1;
-                            }
+                            //right escalator
                             if (grid[j + 1][i] == 6 && grid[j + 2][i] != 2 && grid[j + 1][i - 1] != 2 && grid[j + 1][i + 1] != 2) {
                                 moveGrid[j + 2][i] = moveGrid[j][i] + 1;
                             }
                         }
+                        //check down
                         if (k == 2) {
                             if (grid[j][i + 1] == 0 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
                                 if (moveGrid[j][i + 1] > moves + 1) {
                                     moveGrid[j][i + 1] = moveGrid[j][i] + 1;
-                                    
+
                                 }
                             }
-                            if (grid[j][i + 1] == 3 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
-                                moveGrid[j][i] = moveGrid[j][i] + 1;
-                            }
+                            //down escalator
                             if (grid[j][i + 1] == 4 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
                                 moveGrid[j][i + 2] = moveGrid[j][i] + 1;
                             }
+                            //left escalator
                             if (grid[j][i + 1] == 5 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
-                                moveGrid[j-1][i + 1] = moveGrid[j][i] + 1;
+                                moveGrid[j - 1][i + 1] = moveGrid[j][i] + 1;
                             }
+                            //right escalator
                             if (grid[j][i + 1] == 6 && grid[j][i + 2] != 2 && grid[j + 1][i + 1] != 2 && grid[j - 1][i + 1] != 2) {
-                                moveGrid[j+1][i + 1] = moveGrid[j][i] + 1;
+                                moveGrid[j + 1][i + 1] = moveGrid[j][i] + 1;
                             }
                         }
+                        //check left
                         if (k == 3) {
                             if (grid[j - 1][i] == 0 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
                                 if (moveGrid[j - 1][i] > moves + 1) {
                                     moveGrid[j - 1][i] = moveGrid[j][i] + 1;
-                                    
+
                                 }
                             }
+                            //up escalator
                             if (grid[j - 1][i] == 3 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
-                                moveGrid[j - 1][i-1] = moveGrid[j][i] + 1;
+                                moveGrid[j - 1][i - 1] = moveGrid[j][i] + 1;
                             }
-                            if (grid[j - 1][i] == 4 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
-                                moveGrid[j - 1][i+1] = moveGrid[j][i] + 1;
+                            //down escalator
+                            //down these ones \/\/\/
+                            if (grid[j - 1][i] == 4){
+                                 if(grid[j - 1][i] == 4 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
+                                moveGrid[j - 1][i + 1] = moveGrid[j][i] + 1;
                             }
-                            if (grid[j - 1][i] == 5 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
-                                moveGrid[j - 2][i] = moveGrid[j][i] + 1;
                             }
-                            if (grid[j - 1][i] == 6 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
-                                moveGrid[j][i] = moveGrid[j][i] + 1;
+                            //left escalator
+                            if (grid[j - 1][i] == 5) {
+                                if (grid[j - 2][i] == 0 && grid[j - 2][i] != 2 && grid[j - 1][i + 1] != 2 && grid[j - 1][i - 1] != 2) {
+                                    moveGrid[j - 2][i] = moveGrid[j][i] + 1;
+                                }
                             }
                         }
                     }
                 }
-                
+
             }
-            
+
         }
-        if(moves<x*y){
-            
+        if (moves < x * y) {
+
             moveGrid = checkspot(moveGrid, grid, x, y, ++moves);
         }
-        
+
         return moveGrid;
     }
 }
