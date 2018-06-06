@@ -57,7 +57,7 @@ public class CarGame extends JComponent implements ActionListener {
     int camY = 0;
     Rectangle carBox = new Rectangle(carX, carY, 12, 12);
     Rectangle carBoxBack = new Rectangle(carX, carY, 3, 3);
-    Rectangle[] wall = new Rectangle[60];
+    Rectangle[] wall = new Rectangle[63];
     
     //AI variables
     double speedAI1 = 0;
@@ -118,7 +118,7 @@ public class CarGame extends JComponent implements ActionListener {
 
         // GAME DRAWING GOES HERE
         //angle number
-        g.drawString("Angle: " + angle + ", Speed: " + speed + ",Accel: " + accel + ", deaccel: " + deaccel + "AI position: " + carAI1X + ", "+ carAI1Y, 50, 50);
+        g.drawString("Angle: " + angleAI1 + ", Speed: " + speedAI1 + ",Accel: " + accelAI1 + ", deaccel: " + deaccelAI1 + "AI position: " + carAI1X + ", "+ carAI1Y, 50, 50);
         g.setColor(Color.BLACK);
         //Track 1
         g.fillRect(206 - camX, 528 - camY, 44, 280);
@@ -269,201 +269,138 @@ public class CarGame extends JComponent implements ActionListener {
     // This method is used to do any pre-setup you might need to do
     // This is run before the game loop begins!
     public void preSetup() {
-        // Any of your pre setup before the loop starts should go here
-        for (int i = 1; i < wall.length; i++) {
-            if (i == 1) {
-                wall[i] = new Rectangle(206, 528, 44, 280);
-            }
-            if (i == 2) {
-                wall[i] = new Rectangle(228, 256, 44, 280);
-            }
-            if (i == 3) {
-                wall[i] = new Rectangle(241, 205, 58, 56);
-            }
-            if (i == 4) {
-                wall[i] = new Rectangle(264, 161, 58, 56);
-            }
-            if (i == 5) {
-                wall[i] = new Rectangle(286, 126, 132, 52);
-            }
-            if (i == 6) {
-                wall[i] = new Rectangle(369, 112, 322, 52);
-            }
-            if (i == 7) {
-                wall[i] = new Rectangle(668, 123, 86, 80);
-            }
-            if (i == 8) {
-                wall[i] = new Rectangle(707, 164, 86, 80);
-            }
-            if (i == 9) {
-                wall[i] = new Rectangle(735, 219, 260, 56);
-            }
-            if (i == 10) {
-                wall[i] = new Rectangle(965, 244, 260, 56);
-            }
-            if (i == 11) {
-                wall[i] = new Rectangle(438, 322, 188, 176);
-            }
-            if (i == 12) {
-                wall[i] = new Rectangle(558, 385, 188, 176);
-            }
-            if (i == 13) {
-                wall[i] = new Rectangle(438, 495, 188, 176);
-            }
-            if (i == 14) {
-                wall[i] = new Rectangle(734, 399, 188, 176);
-            }
-            if (i == 15) {
-                wall[i] = new Rectangle(901, 430, 188, 176);
-            }
-            if (i == 16) {
-                wall[i] = new Rectangle(1052, 432, 188, 176);
-            }
-            if (i == 17) {
-                wall[i] = new Rectangle(430, 593, 188, 176);
-            }
-            if (i == 18) {
-                wall[i] = new Rectangle(512, 635, 188, 176);
-            }
-            if (i == 19) {
-                wall[i] = new Rectangle(218, 796, 42, 286);
-            }
-            if (i == 20) {
-                wall[i] = new Rectangle(235, 1057, 64, 74);
-            }
-            if (i == 21) {
-                wall[i] = new Rectangle(279, 1085, 64, 74);
-            }
-            if (i == 22) {
-                wall[i] = new Rectangle(342, 1085, 282, 74);
-            }
-            if (i == 23) {
-                wall[i] = new Rectangle(553, 1045, 282, 74);
-            }
-            if (i == 24) {
-                wall[i] = new Rectangle(783, 1010, 282, 74);
-            }
-            if (i == 25) {
-                wall[i] = new Rectangle(783, 1010, 282, 74);
-            }
-            if (i == 26) {
-                wall[i] = new Rectangle(1058, 926, 82, 90);
-            }
-            if (i == 27) {
-                wall[i] = new Rectangle(1110, 798, 82, 176);
-            }
-            if (i == 28) {
-                wall[i] = new Rectangle(616, 528, 316, 176);
-            }
-            if (i == 29) {
-                wall[i] = new Rectangle(692, 652, 226, 176);
-            }
-            if (i == 30) {
-                wall[i] = new Rectangle(773, 590, 226, 176);
-            }
-            if (i == 31) {
-                wall[i] = new Rectangle(941, 496, 226, 176);
-            }
-            if (i == 32) {
-                wall[i] = new Rectangle(1155, 780, 216, 84);
-            }
-            if (i == 33) {
-                wall[i] = new Rectangle(1216, 235, 216, 60);
-            }
-            if (i == 34) {
-                wall[i] = new Rectangle(1408, 219, 68, 60);
-            }
-            if (i == 35) {
-                wall[i] = new Rectangle(1457, 199, 68, 60);
-            }
-            if (i == 36) {
-                wall[i] = new Rectangle(1507, 128, 68, 102);
-            }
-            if (i == 37) {
-                wall[i] = new Rectangle(1553, -6, 68, 176);
-            }
-            if (i == 38) {
-                wall[i] = new Rectangle(1588, -197, 68, 234);
-            }
-            if (i == 39) {
-                wall[i] = new Rectangle(1610, -266, 90, 98);
-            }
-            if (i == 40) {
-                wall[i] = new Rectangle(1675, -298, 90, 98);
-            }
-            if (i == 41) {
-                wall[i] = new Rectangle(1755, -298, 248, 98);
-            }
-            if (i == 42) {
-                wall[i] = new Rectangle(1950, -236, 110, 98);
-            }
-            if (i == 43) {
-                wall[i] = new Rectangle(2017, -200, 110, 98);
-            }
-            if (i == 44) {
-                wall[i] = new Rectangle(2082, -160, 110, 98);
-            }
-            if (i == 45) {
-                wall[i] = new Rectangle(2138, -106, 110, 98);
-            }
-            if (i == 46) {
-                wall[i] = new Rectangle(1987, 74, 110, 98);
-            }
-            if (i == 47) {
-                wall[i] = new Rectangle(1926, 48, 110, 98);
-            }
-            if (i == 48) {
-                wall[i] = new Rectangle(1864, 23, 110, 98);
-            }
-            if (i == 49) {
-                wall[i] = new Rectangle(1803, -18, 110, 98);
-            }
-            if (i == 50) {
-                wall[i] = new Rectangle(1784, -73, 110, 98);
-            }
-            if (i == 51) {
-                wall[i] = new Rectangle(1785, -12, 110, 350);
-            }
-            if (i == 52) {
-                wall[i] = new Rectangle(1222, 429, 620, 134);
-            }
-            if (i == 53) {
-                wall[i] = new Rectangle(1748, 315, 156, 134);
-            }
-            if (i == 54) {
-                wall[i] = new Rectangle(1664, 381, 156, 134);
-            }
-            if (i == 55) {
-                wall[i] = new Rectangle(1942, 129, 156, 510);
-            }
-            if (i == 56) {
-                wall[i] = new Rectangle(2284, 115, 156, 510);
-            }
-            if (i == 57) {
-                wall[i] = new Rectangle(2246, -76, 202, 198);
-            }
-            if (i == 58) {
-                wall[i] = new Rectangle(1766, 444, 202, 198);
-            }
-            if (i == 59) {
-                wall[i] = new Rectangle(1348, 806, 444, 80);
-            }
-            if (i == 60) {
-                wall[i] = new Rectangle(1761, 847, 444, 80);
-            }
-            if (i == 61) {
-                wall[i] = new Rectangle(2284, 618, 156, 198);
-            }
-            if (i == 62) {
-                wall[i] = new Rectangle(2109, 801, 162, 122);
-            }
-            if (i == 63) {
-                wall[i] = new Rectangle(2215, 759, 162, 122);
-            }
+        // Any of your pre setup before the loop starts should go here        
+            
+                wall[0] = new Rectangle(206, 528, 44, 280);            
+            
+                wall[1] = new Rectangle(228, 256, 44, 280);            
+            
+                wall[2] = new Rectangle(241, 205, 58, 56);            
+            
+                wall[3] = new Rectangle(264, 161, 58, 56);
+            
+                wall[4] = new Rectangle(286, 126, 132, 52);
+            
+                wall[5] = new Rectangle(369, 112, 322, 52);
+            
+                wall[6] = new Rectangle(668, 123, 86, 80);
+            
+                wall[7] = new Rectangle(707, 164, 86, 80);
+            
+                wall[8] = new Rectangle(735, 219, 260, 56);
+            
+                wall[9] = new Rectangle(965, 244, 260, 56);
+            
+                wall[10] = new Rectangle(438, 322, 188, 176);
+            
+                wall[11] = new Rectangle(558, 385, 188, 176);
+            
+                wall[12] = new Rectangle(438, 495, 188, 176);
+            
+                wall[13] = new Rectangle(734, 399, 188, 176);
+            
+                wall[14] = new Rectangle(901, 430, 188, 176);
+            
+                wall[15] = new Rectangle(1052, 432, 188, 176);
+            
+                wall[16] = new Rectangle(430, 593, 188, 176);
+            
+                wall[17] = new Rectangle(512, 635, 188, 176);
+            
+                wall[18] = new Rectangle(218, 796, 42, 286);
+            
+                wall[19] = new Rectangle(235, 1057, 64, 74);
+            
+                wall[20] = new Rectangle(279, 1085, 64, 74);
+            
+                wall[21] = new Rectangle(342, 1085, 282, 74);
+            
+                wall[22] = new Rectangle(553, 1045, 282, 74);
+            
+                wall[23] = new Rectangle(783, 1010, 282, 74);
+            
+                wall[24] = new Rectangle(783, 1010, 282, 74);
+            
+                wall[25] = new Rectangle(1058, 926, 82, 90);
+            
+                wall[26] = new Rectangle(1110, 798, 82, 176);
+            
+                wall[27] = new Rectangle(616, 528, 316, 176);
+            
+                wall[28] = new Rectangle(692, 652, 226, 176);
+            
+                wall[29] = new Rectangle(773, 590, 226, 176);
+            
+                wall[30] = new Rectangle(941, 496, 226, 176);
+            
+                wall[31] = new Rectangle(1155, 780, 216, 84);
+            
+                wall[32] = new Rectangle(1216, 235, 216, 60);
+            
+                wall[33] = new Rectangle(1408, 219, 68, 60);
+            
+                wall[34] = new Rectangle(1457, 199, 68, 60);
+            
+                wall[35] = new Rectangle(1507, 128, 68, 102);
+            
+                wall[36] = new Rectangle(1553, -6, 68, 176);
+            
+                wall[37] = new Rectangle(1588, -197, 68, 234);
+            
+                wall[38] = new Rectangle(1610, -266, 90, 98);
+            
+                wall[39] = new Rectangle(1675, -298, 90, 98);
+            
+                wall[40] = new Rectangle(1755, -298, 248, 98);
+            
+                wall[41] = new Rectangle(1950, -236, 110, 98);
+            
+                wall[42] = new Rectangle(2017, -200, 110, 98);
+            
+                wall[43] = new Rectangle(2082, -160, 110, 98);
+            
+                wall[44] = new Rectangle(2138, -106, 110, 98);
+            
+                wall[45] = new Rectangle(1987, 74, 110, 98);
+            
+                wall[46] = new Rectangle(1926, 48, 110, 98);
+            
+                wall[47] = new Rectangle(1864, 23, 110, 98);
+            
+                wall[48] = new Rectangle(1803, -18, 110, 98);
+            
+                wall[49] = new Rectangle(1784, -73, 110, 98);
+            
+                wall[50] = new Rectangle(1785, -12, 110, 350);
+            
+                wall[51] = new Rectangle(1222, 429, 620, 134);
+            
+                wall[52] = new Rectangle(1748, 315, 156, 134);
+            
+                wall[53] = new Rectangle(1664, 381, 156, 134);
+           
+                wall[54] = new Rectangle(1942, 129, 156, 510);
+            
+                wall[55] = new Rectangle(2284, 115, 156, 510);
+           
+                wall[56] = new Rectangle(2246, -76, 202, 198);
+            
+                wall[57] = new Rectangle(1766, 444, 202, 198);
+            
+                wall[58] = new Rectangle(1348, 806, 444, 80);
+            
+                wall[59] = new Rectangle(1761, 847, 444, 80);
+            
+                wall[60] = new Rectangle(2284, 618, 156, 198);
+            
+                wall[61] = new Rectangle(2109, 801, 162, 122);
+            
+                wall[62] = new Rectangle(2215, 759, 162, 122);
+            
 
 
 
-        }
+        
     }
 
     // The main game loop
@@ -561,12 +498,13 @@ public class CarGame extends JComponent implements ActionListener {
           //  angleAI1 = angleAI1 + 2;
        // }
         if(startAI == true){
-            if(accelAI1 < 6){
+            if(accelAI1 < 12){
                accelAI1 = accelAI1 + 0.08;
                 speedAI1 = accelAI1 + deaccelAI1; 
             }
-            if(speedAI1 > 4){
-                speedAI1 = 4;
+            
+            if (deaccelAI1 < 0) {
+            deaccelAI1 = deaccelAI1 + 0.2;
             }
                 
         }
@@ -582,36 +520,108 @@ public class CarGame extends JComponent implements ActionListener {
 
     private void aiCarCollision() {
         double newAI1Angle = Math.toRadians(angleAI1);
-        eyeL1.x = (int) (carAI1X + 328 + 65 * (Math.cos( newAI1Angle -Math.toRadians(108.3))));
-        eyeL1.y = (int) (carAI1Y + 272 + 65 * (Math.sin( newAI1Angle -Math.toRadians(108.3))));
-        eyeR1.x = (int) (carAI1X + 339 + 65 * (Math.cos( newAI1Angle -Math.toRadians(71.7))));
-        eyeR1.y = (int) (carAI1Y + 272 + 65 * (Math.sin( newAI1Angle -Math.toRadians(71.7))));
+        boolean lEyeFirst = false;
+        boolean rEyeFirst = false;
+        eyeL1.x = (int) (carAI1X + 328 + 65 * (Math.cos( newAI1Angle -Math.toRadians(118.3))));
+        eyeL1.y = (int) (carAI1Y + 272 + 65 * (Math.sin( newAI1Angle -Math.toRadians(118.3))));
+        eyeR1.x = (int) (carAI1X + 339 + 65 * (Math.cos( newAI1Angle -Math.toRadians(61.7))));
+        eyeR1.y = (int) (carAI1Y + 272 + 65 * (Math.sin( newAI1Angle -Math.toRadians(61.7))));
         
         carAI1Box.x = (int) (carAI1X + 328 -2 + 9.6 * (Math.cos(newAI1Angle + Math.toRadians(51))) - (carAI1Box.width / 2));
         carAI1Box.y = (int) (carAI1Y + 272  + 9.6 * (Math.sin(newAI1Angle + Math.toRadians(51))) - (carAI1Box.height / 2));
         carAI1BoxBack.x = (int) (carAI1X + 328 -3 + 16.15 * (Math.cos(newAI1Angle + Math.toRadians(68))));
         carAI1BoxBack.y = (int) (carAI1Y + 272 + 16.15 * (Math.sin(newAI1Angle + Math.toRadians(68))));
-        
-        for (int i = 1; i < wall.length; i++) {
-           //if (eyeL1.intersects(wall[i])&& !(eyeR1.intersects(wall[i]))) {
-           // angleAI1 = angleAI1 + 4;
-       // }
+        if(startAI == true){
+        for (int i = 1; i < wall.length; i++) { 
+            if(eyeR1.intersects(wall[i])&& eyeL1.intersects(wall[i])){
+                rEyeFirst = true;
+                lEyeFirst = true;
+                deaccelAI1 = -6;
+                accelAI1 = accelAI1 - 6;
+                angleAI1 = angleAI1 - 25;
+                
+                if(!(eyeL1.intersects(wall[i]))){
+                    rEyeFirst = false; 
+                }
+                if(!(eyeR1.intersects(wall[i]))){
+                    lEyeFirst = false; 
+                }
+                
+                if(lEyeFirst == true && rEyeFirst == true){
+                angleAI1 = angleAI1 + 45;
+            } 
+                if(lEyeFirst == true){
+                angleAI1 = angleAI1 - 5;
+            } 
+                if(rEyeFirst == true){
+                angleAI1 = angleAI1 + 5;
+            } 
+                if(!(eyeL1.intersects(wall[i]))){
+                    rEyeFirst = false; 
+                }
+                if(!(eyeR1.intersects(wall[i]))){
+                    lEyeFirst = false; 
+                }
+            }
         if (eyeR1.intersects(wall[i])&& !(eyeL1.intersects(wall[i]))) {
-            angleAI1 = angleAI1 - 8;
-
+            if(lEyeFirst == false){
+                angleAI1 = angleAI1 - 5;
+                deaccelAI1 = -3;
+                rEyeFirst = true;                
+            } 
         }
-        if(eyeR1.intersects(wall[i])&&eyeL1.intersects(wall[i])){
-            angleAI1 = angleAI1 + 8;
-            
+        if(eyeL1.intersects(wall[i])&& !(eyeR1.intersects(wall[i]))){
+            if(rEyeFirst == false){
+                angleAI1 = angleAI1 + 5;
+                deaccelAI1 = -3;
+                lEyeFirst = true;                
+            }
         }
-        if (carAI1Box.intersects(wall[i])) {
-            accelAI1 = 0;
-            deaccelAI1 = -3;
+        
+        if(!(eyeR1.intersects(wall[i]))){
+            rEyeFirst = false;
+        }
+        
+        if(!(eyeR1.intersects(wall[i]))){
+            lEyeFirst = false;
+        }
+        
+        if (carAI1Box.intersects(wall[i])) {            
+            accelAI1 = 2;
+            deaccelAI1 = -7;            
+            if(eyeR1.intersects(wall[i])){                
+                angleAI1 = angleAI1 - 12;
+                               
+            }
+            if(eyeL1.intersects(wall[i])){
+                angleAI1 = angleAI1 + 12;                
+                                
+            } 
+            if(eyeL1.intersects(wall[i]) && eyeR1.intersects(wall[i])){
+                angleAI1 = angleAI1 - 45;                
+                               
+            }
 
         }
         if (carAI1BoxBack.intersects(wall[i])) {
-            accelAI1 = 3;
-            deaccelAI1 = 0;
+            accelAI1 = 7;
+            deaccelAI1 = -2;
+            if(rEyeFirst == false){                
+                angleAI1 = angleAI1 + 12;
+                lEyeFirst = true;                
+            }
+            if(lEyeFirst == false){
+                angleAI1 = angleAI1 - 12;                
+                rEyeFirst = true;                
+            } 
+            if(lEyeFirst == true && rEyeFirst == true){
+                angleAI1 = angleAI1 - 45;                
+                               
+            } 
+            if(!(lEyeFirst == true && rEyeFirst == true)){
+                angleAI1 = angleAI1 + 55;                
+                               
+            }
 
         }
         
@@ -620,6 +630,7 @@ public class CarGame extends JComponent implements ActionListener {
             angleAI1 = 0;
         }
 
+    }
     }
 
     // Used to implement any of the Mouse Actions
