@@ -15,6 +15,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.io.File;
+import java.util.Scanner;
 import javax.swing.Timer;
 
 /**
@@ -58,6 +60,8 @@ public class CarGame extends JComponent implements ActionListener {
     Rectangle carBox = new Rectangle(carX, carY, 12, 12);
     Rectangle carBoxBack = new Rectangle(carX, carY, 3, 3);
     Rectangle[] wall = new Rectangle[63];
+    Rectangle[] Blocks = new Rectangle[200];
+    int numBlocks = 0;
     //AI variables
     double speedAI1 = 0;
     double accelAI1 = 0;
@@ -69,11 +73,13 @@ public class CarGame extends JComponent implements ActionListener {
     boolean turnRightAI1 = false;
     boolean gasAI1 = false;
     boolean startAI = false;
+    boolean allEyeHit = false;
     Rectangle carAI1Box = new Rectangle(carAI1X, carAI1Y, 12, 12);
     Rectangle carAI1BoxBack = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeL1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeR1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeFront = new Rectangle(carAI1X, carAI1Y, 3, 3);
+   
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -118,7 +124,15 @@ public class CarGame extends JComponent implements ActionListener {
         // GAME DRAWING GOES HERE
         //angle number
         g.drawString("Angle: " + angleAI1 + ", Speed: " + speedAI1 + ",Accel: " + accelAI1 + ", deaccel: " + deaccelAI1 + "AI position: " + carAI1X + ", " + carAI1Y, 50, 50);
+        if(allEyeHit == true){
+            g.drawString("Angle: " + angleAI1 + ", Speed: " + speedAI1 + ",Accel: " + accelAI1 + ", deaccel: " + deaccelAI1 + "AI position: " + carAI1X + ", " + carAI1Y + ", HIIIIT", 50, 50);
+        }
         g.setColor(Color.BLACK);
+        //track creator
+        for (int i = 0; i < numBlocks; i++) {
+            g.fillRect(Blocks[i].x, Blocks[i].y, Blocks[i].width, Blocks[i].height);
+            
+        }
         //Track 1
         g.fillRect(206 - camX, 528 - camY, 44, 280);
         g.fillRect(228 - camX, 256 - camY, 44, 280);
@@ -270,7 +284,22 @@ public class CarGame extends JComponent implements ActionListener {
     // This is run before the game loop begins!
     public void preSetup() {
         // Any of your pre setup before the loop starts should go here        
-
+    Scanner in = null;
+    try{
+    in = new Scanner(new File("thing txt")); 
+    }catch (Exception e){
+        e.printStackTrace();
+    }
+    numBlocks = in.nextInt();    
+    in.nextLine();
+        for (int i = 0; i < numBlocks; i++) {
+            int x = in.nextInt();
+            int y = in.nextInt();
+            int w = in.nextInt();
+            int h = in.nextInt();
+            Blocks[i] = new Rectangle(x,y,w,h);
+                      
+        }
         wall[0] = new Rectangle(206, 528, 44, 280);
 
         wall[1] = new Rectangle(228, 256, 44, 280);
@@ -516,9 +545,7 @@ public class CarGame extends JComponent implements ActionListener {
     private void aiCarCollision() {
         double newAI1Angle = Math.toRadians(angleAI1);
         boolean lEyeFirst = false;
-        boolean rEyeFirst = false;
-        boolean twoEyeHit = false;
-        boolean twoEyeHit2 = false;
+        boolean rEyeFirst = false;        
         int lastTurn = 0;
         eyeL1.x = (int) (carAI1X + 328 + 65 * (Math.cos(newAI1Angle - Math.toRadians(118.3))));
         eyeL1.y = (int) (carAI1Y + 272 + 65 * (Math.sin(newAI1Angle - Math.toRadians(118.3))));
@@ -538,67 +565,46 @@ public class CarGame extends JComponent implements ActionListener {
                     //if the right eye also hits turn left and slow down
                     if (eyeL1.intersects(wall[i]) && eyeR1.intersects(wall[i])) {
                         deaccelAI1 = -8;
-                        accelAI1 = accelAI1 + deaccelAI1;
-                        //if neither eye hits sloooowww down and turn right and turn do some other things below **
+                        accelAI1 = accelAI1 + 0.5*deaccelAI1;
+                        allEyeHit = true;
+                        //if neither eye hits sloooowww down and turn the same as the last time you turned
                     } else if (!(eyeL1.intersects(wall[i])) && !(eyeR1.intersects(wall[i]))) {
                         //twoEyeHit = true;
-                        deaccelAI1 = -8;                        
-                        angleAI1 = angleAI1 + lastTurn;
+                        deaccelAI1 = -8;
+                                                
+                        angleAI1 = angleAI1 + lastTurn; 
+                        allEyeHit = false;
+                        //if right eye hits turn left
                     } else if (eyeR1.intersects(wall[i])) {
                         angleAI1 = angleAI1 - 8;
                         deaccelAI1 = -3;
                         lastTurn = -8;
+                        //if left eye hits turn right
                     } else if (eyeL1.intersects(wall[i])) {
                         angleAI1 = angleAI1 + 8;
                         deaccelAI1 = -3;
                         lastTurn = 8;
                     }
                 }
-                //if the right eye hits turn left and slow down
+                //if only the right eye hits turn left and slow down
                 if (eyeR1.intersects(wall[i])) {
                     angleAI1 = angleAI1 - 5;
                     deaccelAI1 = -3;
                     lastTurn = -5;
+                    allEyeHit = true;
+                    //if only the left eye hits turn left and slow down
                 }else if (eyeL1.intersects(wall[i])) {
                     angleAI1 = angleAI1 + 5;
                     deaccelAI1 = -3;
                     lastTurn = 5;
+                    allEyeHit = true;
 
                 }
-                //** 
-                if (twoEyeHit == true) {
-                    //if both eyes not hit turn left instead of left from above and slow down
-                    if (eyeL1.intersects(wall[i]) && eyeR1.intersects(wall[i])) {
-                        angleAI1 = angleAI1 - 14;
-                        deaccelAI1 = -8;
-                        accelAI1 = 0;
-                    }
-                    //if only right eye now hits turn left
-                    if (!(eyeL1.intersects(wall[i])) && eyeR1.intersects(wall[i])) {
-                        angleAI1 = angleAI1 - 8;
-                        deaccelAI1 = -3;
-                        twoEyeHit = false;
-                    }
-                    //if only left eye now hits turn right
-                    if (!(eyeR1.intersects(wall[i])) && eyeL1.intersects(wall[i])) {
-                        angleAI1 = angleAI1 + 8;
-                        deaccelAI1 = -3;
-                        twoEyeHit = false;
-                    }
-                    //if neither eye hits turn right
-                    if (!(eyeL1.intersects(wall[i])) && !(eyeR1.intersects(wall[i]))) {
-                        twoEyeHit = false;
-                        angleAI1 = angleAI1 + 15;
-                    }
-
-                }
-
-
-
+                
                 //if AI hits wall head on
                 if (carAI1Box.intersects(wall[i])) {
-                    deaccelAI1 = -8; 
-                    accelAI1 = accelAI1 + deaccelAI1;
+                    deaccelAI1 = -18; 
+                    accelAI1 = 0;
                     angleAI1 = angleAI1 + lastTurn;
                     
                 }

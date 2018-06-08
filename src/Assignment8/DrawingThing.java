@@ -55,6 +55,8 @@ public class DrawingThing extends JComponent implements ActionListener {
     boolean moveDown = false;
     boolean moveLeft = false;
     boolean moveRight = false;
+    int numBlocks = 0;
+    boolean endDrawing = false;
 
 
     // GAME VARIABLES END HERE    
@@ -103,10 +105,13 @@ public class DrawingThing extends JComponent implements ActionListener {
             g.setColor(Color.BLACK);
             g.fillRect(x[i]-(sizeX[i]/2)- camX, y[i]-(sizeY[i]/2)- camY, sizeX[i], sizeY[i]);
             
+            
         }
         g.setColor(Color.RED);
             g.fillRect(mX-(currentSizeX/2), mY-(currentSizeY/2), currentSizeX, currentSizeY);
-        
+        if(endDrawing == true){
+            g.drawString("DONE", 0- camX, 0- camY);
+        }
 		
 		
         // GAME DRAWING ENDS HERE
@@ -151,8 +156,9 @@ public class DrawingThing extends JComponent implements ActionListener {
         public void mousePressed(MouseEvent e) {
         x[points] = mX + camX;
         y[points] = mY + camY;
-        points++;
-            System.out.println("g.fillRect(" +(mX-currentSizeX/2 + camX) +", "+ (mY-currentSizeY/2 + camY) + ", "+ currentSizeX + ", "+ currentSizeY +");");
+        points++;    
+        numBlocks++;
+            System.out.println((mX-currentSizeX/2 + camX) +" "+ (mY-currentSizeY/2 + camY) + " "+ currentSizeX + " "+ currentSizeY);
         }
 
         // if a mouse button has been released
@@ -247,6 +253,10 @@ public class DrawingThing extends JComponent implements ActionListener {
             }
             if (keyCode == KeyEvent.VK_CONTROL) {
                 stretchX = true;
+            }
+            if (keyCode == KeyEvent.VK_ENTER) {
+                endDrawing = true;
+                System.out.println(numBlocks);
             }
             
 
