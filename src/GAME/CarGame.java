@@ -133,70 +133,8 @@ public class CarGame extends JComponent implements ActionListener {
             g.fillRect(Blocks[i].x, Blocks[i].y, Blocks[i].width, Blocks[i].height);
             
         }
-        //Track 1
-        g.fillRect(206 - camX, 528 - camY, 44, 280);
-        g.fillRect(228 - camX, 256 - camY, 44, 280);
-        g.fillRect(241 - camX, 205 - camY, 58, 56);
-        g.fillRect(264 - camX, 161 - camY, 58, 56);
-        g.fillRect(286 - camX, 126 - camY, 132, 52);
-        g.fillRect(369 - camX, 112 - camY, 322, 52);
-        g.fillRect(668 - camX, 123 - camY, 86, 80);
-        g.fillRect(707 - camX, 164 - camY, 86, 80);
-        g.fillRect(735 - camX, 219 - camY, 260, 56);
-        g.fillRect(965 - camX, 244 - camY, 260, 56);
-        g.fillRect(438 - camX, 322 - camY, 188, 176);
-        g.fillRect(558 - camX, 385 - camY, 188, 176);
-        g.fillRect(438 - camX, 495 - camY, 188, 176);
-        g.fillRect(734 - camX, 399 - camY, 188, 176);
-        g.fillRect(901 - camX, 430 - camY, 188, 176);
-        g.fillRect(1052 - camX, 432 - camY, 188, 176);
-        g.fillRect(430 - camX, 593 - camY, 188, 176);
-        g.fillRect(512 - camX, 635 - camY, 188, 176);
-        g.fillRect(218 - camX, 796 - camY, 42, 286);
-        g.fillRect(235 - camX, 1057 - camY, 64, 74);
-        g.fillRect(279 - camX, 1085 - camY, 64, 74);
-        g.fillRect(342 - camX, 1085 - camY, 282, 74);
-        g.fillRect(553 - camX, 1045 - camY, 282, 74);
-        g.fillRect(783 - camX, 1010 - camY, 282, 74);
-        g.fillRect(1002 - camX, 965 - camY, 82, 90);
-        g.fillRect(1058 - camX, 926 - camY, 82, 90);
-        g.fillRect(1110 - camX, 798 - camY, 82, 176);
-        g.fillRect(616 - camX, 528 - camY, 316, 176);
-        g.fillRect(692 - camX, 652 - camY, 226, 176);
-        g.fillRect(773 - camX, 590 - camY, 226, 176);
-        g.fillRect(941 - camX, 496 - camY, 226, 176);
-        g.fillRect(1155 - camX, 780 - camY, 216, 84);
-        g.fillRect(1216 - camX, 235 - camY, 216, 60);
-        g.fillRect(1408 - camX, 219 - camY, 68, 60);
-        g.fillRect(1457 - camX, 199 - camY, 68, 60);
-        g.fillRect(1507 - camX, 128 - camY, 68, 102);
-        g.fillRect(1553 - camX, -6 - camY, 68, 176);
-        g.fillRect(1588 - camX, -197 - camY, 68, 234);
-        g.fillRect(1610 - camX, -266 - camY, 90, 98);
-        g.fillRect(1675 - camX, -298 - camY, 90, 98);
-        g.fillRect(1755 - camX, -298 - camY, 248, 98);
-        g.fillRect(1950 - camX, -236 - camY, 110, 98);
-        g.fillRect(2017 - camX, -200 - camY, 110, 98);
-        g.fillRect(2082 - camX, -160 - camY, 110, 98);
-        g.fillRect(2138 - camX, -106 - camY, 110, 98);
-        g.fillRect(1987 - camX, 74 - camY, 110, 98);
-        g.fillRect(1926 - camX, 48 - camY, 110, 98);
-        g.fillRect(1864 - camX, 23 - camY, 110, 98);
-        g.fillRect(1803 - camX, -18 - camY, 110, 98);
-        g.fillRect(1784 - camX, -73 - camY, 110, 98);
-        g.fillRect(1785 - camX, -12 - camY, 110, 350);
-        g.fillRect(1222 - camX, 429 - camY, 620, 134);
-        g.fillRect(1748 - camX, 315 - camY, 156, 134);
-        g.fillRect(1664 - camX, 381 - camY, 156, 134);
-        g.fillRect(1942 - camX, 129 - camY, 156, 510);
-        g.fillRect(2284 - camX, 115 - camY, 156, 510);
-        g.fillRect(2246 - camX, -76 - camY, 202, 198);
-        g.fillRect(1766 - camX, 444 - camY, 202, 198);
-        g.fillRect(1348 - camX, 806 - camY, 444, 80);
-        g.fillRect(1761 - camX, 847 - camY, 444, 80);
-        g.fillRect(2284 - camX, 618 - camY, 156, 198);
-        g.fillRect(2109 - camX, 801 - camY, 162, 122);
-        g.fillRect(2215 - camX, 759 - camY, 162, 122);
+        
+        
         //hitbox
         g.setColor(Color.RED);
         g.drawRect(eyeFront.x - camX, eyeFront.y - camY, eyeFront.width, eyeFront.height);
@@ -286,7 +224,7 @@ public class CarGame extends JComponent implements ActionListener {
         // Any of your pre setup before the loop starts should go here        
     Scanner in = null;
     try{
-    in = new Scanner(new File("thing txt")); 
+    in = new Scanner(new File("Test txt")); 
     }catch (Exception e){
         e.printStackTrace();
     }
@@ -300,136 +238,7 @@ public class CarGame extends JComponent implements ActionListener {
             Blocks[i] = new Rectangle(x,y,w,h);
                       
         }
-        wall[0] = new Rectangle(206, 528, 44, 280);
-
-        wall[1] = new Rectangle(228, 256, 44, 280);
-
-        wall[2] = new Rectangle(241, 205, 58, 56);
-
-        wall[3] = new Rectangle(264, 161, 58, 56);
-
-        wall[4] = new Rectangle(286, 126, 132, 52);
-
-        wall[5] = new Rectangle(369, 112, 322, 52);
-
-        wall[6] = new Rectangle(668, 123, 86, 80);
-
-        wall[7] = new Rectangle(707, 164, 86, 80);
-
-        wall[8] = new Rectangle(735, 219, 260, 56);
-
-        wall[9] = new Rectangle(965, 244, 260, 56);
-
-        wall[10] = new Rectangle(438, 322, 188, 176);
-
-        wall[11] = new Rectangle(558, 385, 188, 176);
-
-        wall[12] = new Rectangle(438, 495, 188, 176);
-
-        wall[13] = new Rectangle(734, 399, 188, 176);
-
-        wall[14] = new Rectangle(901, 430, 188, 176);
-
-        wall[15] = new Rectangle(1052, 432, 188, 176);
-
-        wall[16] = new Rectangle(430, 593, 188, 176);
-
-        wall[17] = new Rectangle(512, 635, 188, 176);
-
-        wall[18] = new Rectangle(218, 796, 42, 286);
-
-        wall[19] = new Rectangle(235, 1057, 64, 74);
-
-        wall[20] = new Rectangle(279, 1085, 64, 74);
-
-        wall[21] = new Rectangle(342, 1085, 282, 74);
-
-        wall[22] = new Rectangle(553, 1045, 282, 74);
-
-        wall[23] = new Rectangle(783, 1010, 282, 74);
-
-        wall[24] = new Rectangle(783, 1010, 282, 74);
-
-        wall[25] = new Rectangle(1058, 926, 82, 90);
-
-        wall[26] = new Rectangle(1110, 798, 82, 176);
-
-        wall[27] = new Rectangle(616, 528, 316, 176);
-
-        wall[28] = new Rectangle(692, 652, 226, 176);
-
-        wall[29] = new Rectangle(773, 590, 226, 176);
-
-        wall[30] = new Rectangle(941, 496, 226, 176);
-
-        wall[31] = new Rectangle(1155, 780, 216, 84);
-
-        wall[32] = new Rectangle(1216, 235, 216, 60);
-
-        wall[33] = new Rectangle(1408, 219, 68, 60);
-
-        wall[34] = new Rectangle(1457, 199, 68, 60);
-
-        wall[35] = new Rectangle(1507, 128, 68, 102);
-
-        wall[36] = new Rectangle(1553, -6, 68, 176);
-
-        wall[37] = new Rectangle(1588, -197, 68, 234);
-
-        wall[38] = new Rectangle(1610, -266, 90, 98);
-
-        wall[39] = new Rectangle(1675, -298, 90, 98);
-
-        wall[40] = new Rectangle(1755, -298, 248, 98);
-
-        wall[41] = new Rectangle(1950, -236, 110, 98);
-
-        wall[42] = new Rectangle(2017, -200, 110, 98);
-
-        wall[43] = new Rectangle(2082, -160, 110, 98);
-
-        wall[44] = new Rectangle(2138, -106, 110, 98);
-
-        wall[45] = new Rectangle(1987, 74, 110, 98);
-
-        wall[46] = new Rectangle(1926, 48, 110, 98);
-
-        wall[47] = new Rectangle(1864, 23, 110, 98);
-
-        wall[48] = new Rectangle(1803, -18, 110, 98);
-
-        wall[49] = new Rectangle(1784, -73, 110, 98);
-
-        wall[50] = new Rectangle(1785, -12, 110, 350);
-
-        wall[51] = new Rectangle(1222, 429, 620, 134);
-
-        wall[52] = new Rectangle(1748, 315, 156, 134);
-
-        wall[53] = new Rectangle(1664, 381, 156, 134);
-
-        wall[54] = new Rectangle(1942, 129, 156, 510);
-
-        wall[55] = new Rectangle(2284, 115, 156, 510);
-
-        wall[56] = new Rectangle(2246, -76, 202, 198);
-
-        wall[57] = new Rectangle(1766, 444, 202, 198);
-
-        wall[58] = new Rectangle(1348, 806, 444, 80);
-
-        wall[59] = new Rectangle(1761, 847, 444, 80);
-
-        wall[60] = new Rectangle(2284, 618, 156, 198);
-
-        wall[61] = new Rectangle(2109, 801, 162, 122);
-
-        wall[62] = new Rectangle(2215, 759, 162, 122);
-
-
-
-
-
+        
     }
 
     // The main game loop
@@ -504,12 +313,12 @@ public class CarGame extends JComponent implements ActionListener {
         carBox.y = (int) (carY + 272 + 9.6 * (Math.sin(newAngle + Math.toRadians(51))) - (carBox.height / 2));
         carBoxBack.x = (int) (carX + 328 - 3 + 16.15 * (Math.cos(newAngle + Math.toRadians(68))));
         carBoxBack.y = (int) (carY + 272 + 16.15 * (Math.sin(newAngle + Math.toRadians(68))));
-        for (int i = 1; i < wall.length; i++) {
-            if (carBox.intersects(wall[i])) {
+        for (int i = 1; i < numBlocks; i++) {
+            if (carBox.intersects(Blocks[i])) {
                 accel = 0;
                 deaccel = -3;
             }
-            if (carBoxBack.intersects(wall[i])) {
+            if (carBoxBack.intersects(Blocks[i])) {
                 accel = 3;
                 deaccel = 0;
 
@@ -560,40 +369,40 @@ public class CarGame extends JComponent implements ActionListener {
         carAI1BoxBack.y = (int) (carAI1Y + 272 + 16.15 * (Math.sin(newAI1Angle + Math.toRadians(68))));
         if (startAI == true) {
             //if front eye hits a wall, check for for other colisions
-            for (int i = 1; i < wall.length; i++) {
-                if (eyeFront.intersects(wall[i])) {
+            for (int i = 1; i < numBlocks; i++) {
+                if (eyeFront.intersects(Blocks[i])) {
                     //if the right eye also hits turn left and slow down
-                    if (eyeL1.intersects(wall[i]) && eyeR1.intersects(wall[i])) {
+                    if (eyeL1.intersects(Blocks[i]) && eyeR1.intersects(Blocks[i])) {
                         deaccelAI1 = -8;
                         accelAI1 = accelAI1 + 0.5*deaccelAI1;
                         allEyeHit = true;
                         //if neither eye hits sloooowww down and turn the same as the last time you turned
-                    } else if (!(eyeL1.intersects(wall[i])) && !(eyeR1.intersects(wall[i]))) {
+                    } else if (!(eyeL1.intersects(Blocks[i])) && !(eyeR1.intersects(Blocks[i]))) {
                         //twoEyeHit = true;
                         deaccelAI1 = -8;
                                                 
                         angleAI1 = angleAI1 + lastTurn; 
                         allEyeHit = false;
                         //if right eye hits turn left
-                    } else if (eyeR1.intersects(wall[i])) {
+                    } else if (eyeR1.intersects(Blocks[i])) {
                         angleAI1 = angleAI1 - 8;
                         deaccelAI1 = -3;
                         lastTurn = -8;
                         //if left eye hits turn right
-                    } else if (eyeL1.intersects(wall[i])) {
+                    } else if (eyeL1.intersects(Blocks[i])) {
                         angleAI1 = angleAI1 + 8;
                         deaccelAI1 = -3;
                         lastTurn = 8;
                     }
                 }
                 //if only the right eye hits turn left and slow down
-                if (eyeR1.intersects(wall[i])) {
+                if (eyeR1.intersects(Blocks[i])) {
                     angleAI1 = angleAI1 - 5;
                     deaccelAI1 = -3;
                     lastTurn = -5;
                     allEyeHit = true;
                     //if only the left eye hits turn left and slow down
-                }else if (eyeL1.intersects(wall[i])) {
+                }else if (eyeL1.intersects(Blocks[i])) {
                     angleAI1 = angleAI1 + 5;
                     deaccelAI1 = -3;
                     lastTurn = 5;
@@ -602,7 +411,7 @@ public class CarGame extends JComponent implements ActionListener {
                 }
                 
                 //if AI hits wall head on
-                if (carAI1Box.intersects(wall[i])) {
+                if (carAI1Box.intersects(Blocks[i])) {
                     deaccelAI1 = -18; 
                     accelAI1 = 0;
                     angleAI1 = angleAI1 + lastTurn;
@@ -634,18 +443,18 @@ public class CarGame extends JComponent implements ActionListener {
                 //     }
 
                 //  }
-                if (carAI1BoxBack.intersects(wall[i])) {
-                    if (eyeR1.intersects(wall[i]) && !(eyeL1.intersects(wall[i]))) {
+                if (carAI1BoxBack.intersects(Blocks[i])) {
+                    if (eyeR1.intersects(Blocks[i]) && !(eyeL1.intersects(Blocks[i]))) {
                         angleAI1 = angleAI1 - 6;
                         accelAI1 = 7;
                         deaccelAI1 = -2;
                     }
-                    if (eyeL1.intersects(wall[i]) && !(eyeR1.intersects(wall[i]))) {
+                    if (eyeL1.intersects(Blocks[i]) && !(eyeR1.intersects(Blocks[i]))) {
                         angleAI1 = angleAI1 + 6;
                         accelAI1 = 7;
                         deaccelAI1 = -2;
                     }
-                    if (eyeL1.intersects(wall[i]) && eyeR1.intersects(wall[i])) {
+                    if (eyeL1.intersects(Blocks[i]) && eyeR1.intersects(Blocks[i])) {
                         angleAI1 = angleAI1 - 12;
                         accelAI1 = 7;
                         deaccelAI1 = -2;
