@@ -101,6 +101,8 @@ public class DrawingThing extends JComponent implements ActionListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
+        g.setColor(Color.BLUE);
+        g.fillRect(328 - camX, 272 - camY, 12, 15);
         for (int i = 0; i < points; i++) {
             g.setColor(Color.BLACK);
             g.fillRect(x[i]-(sizeX[i]/2)- camX, y[i]-(sizeY[i]/2)- camY, sizeX[i], sizeY[i]);
