@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -12,6 +13,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.io.File;
+import java.util.Scanner;
 import javax.swing.Timer;
 
 /**
@@ -56,7 +59,9 @@ public class DrawingThing extends JComponent implements ActionListener {
     boolean moveLeft = false;
     boolean moveRight = false;
     int numBlocks = 0;
+    int numBlocksLoad = 0;
     boolean endDrawing = false;
+    Rectangle[] Blocks = new Rectangle[1000];
 
 
     // GAME VARIABLES END HERE    
@@ -101,6 +106,13 @@ public class DrawingThing extends JComponent implements ActionListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
+        
+        g.setColor(Color.BLACK);
+        //track creator
+        for (int i = 0; i < numBlocksLoad; i++) {
+            g.fillRect(Blocks[i].x- camX, Blocks[i].y-camY, Blocks[i].width, Blocks[i].height);
+            
+        }
         g.setColor(Color.BLUE);
         g.fillRect(328 - camX, 272 - camY, 12, 15);
         for (int i = 0; i < points; i++) {
@@ -129,7 +141,44 @@ public class DrawingThing extends JComponent implements ActionListener {
         for (int i = 0; i < sizeY.length; i++) {
             sizeY[i] = currentSizeY;
         }
-        
+        Scanner in = null;
+    try{
+    in = new Scanner(new File("Track1")); 
+    }catch (Exception e){
+       // e.printStackTrace();
+    }
+    numBlocksLoad = in.nextInt();
+    points = numBlocksLoad;
+    numBlocks = numBlocksLoad;
+    in.nextLine();
+    
+        for (int i = 0; i < numBlocksLoad; i++) {
+            int x = in.nextInt();
+            int y = in.nextInt();
+            int w = in.nextInt();            
+            int h = in.nextInt();
+            Blocks[i] = new Rectangle(x,y,w,h);
+                      
+        }
+        in.close();
+        try{
+    in = new Scanner(new File("Track1")); 
+    }catch (Exception e){
+        //e.printStackTrace();
+    }
+        int buf1 = in.nextInt();             
+        for (int i = 0; i < numBlocksLoad; i++) {
+            
+            System.out.print(in.nextInt());
+            System.out.print(" ");
+            System.out.print(in.nextInt());
+            System.out.print(" ");
+            System.out.print(in.nextInt());
+            System.out.print(" ");
+            System.out.print(in.nextInt());
+            System.out.println("");
+            
+        }
 
     }
 
@@ -160,6 +209,7 @@ public class DrawingThing extends JComponent implements ActionListener {
         y[points] = mY + camY;
         points++;    
         numBlocks++;
+            
             System.out.println((mX-currentSizeX/2 + camX) +" "+ (mY-currentSizeY/2 + camY) + " "+ currentSizeX + " "+ currentSizeY);
         }
 

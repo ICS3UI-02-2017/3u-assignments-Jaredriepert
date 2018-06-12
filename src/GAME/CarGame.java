@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -62,11 +63,16 @@ public class CarGame extends JComponent implements ActionListener {
     Rectangle carBoxBack = new Rectangle(carX, carY, 3, 3);
     Rectangle[] wall = new Rectangle[63];
     Rectangle[] Blocks = new Rectangle[300];
+    Rectangle[] finishLine = new Rectangle[2];
     int numBlocks = 0;
+    int laps = 0;
+    boolean halfway = false;
+    boolean crossFinish = false;
+    double timer = 0;
     //AI variables
     double speedAI1 = 0;
     double accelAI1 = 0;
-    double deaccelAI1 = 0;    
+    double deaccelAI1 = 0;
     double angleAI1 = 0;
     int carAI1X = 0;
     int carAI1Y = 0;
@@ -80,7 +86,9 @@ public class CarGame extends JComponent implements ActionListener {
     Rectangle eyeL1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeR1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeFront = new Rectangle(carAI1X, carAI1Y, 3, 3);
-   
+    
+    Font biggerFont = new Font("arial", Font.BOLD, 36);
+    Font smallerFont = new Font("arial", Font.BOLD, 28);
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -124,33 +132,33 @@ public class CarGame extends JComponent implements ActionListener {
 
         // GAME DRAWING GOES HERE
         //angle number
-        g.drawString("Angle: " + angleAI1 + ", Speed: " + speedAI1 + ",Accel: " + accelAI1 + ", deaccel: " + deaccelAI1 + "AI position: " + carAI1X + ", " + carAI1Y +", "+ tireMarks + ", "+ tireLife[tireMarks], 50, 50);
-        if(allEyeHit == true){
-            g.drawString("Angle: " + angleAI1 + ", Speed: " + speedAI1 + ",Accel: " + accelAI1 + ", deaccel: " + deaccelAI1 + "AI position: " + carAI1X + ", " + carAI1Y + ", HIIIIT", 50, 50);
+        g.setColor(Color.RED);
+        for (int i = 0; i < 2; i++) {
+            g.fillRect(finishLine[i].x - camX, finishLine[i].y - camY, finishLine[i].width, finishLine[i].height);
         }
         g.setColor(Color.BLACK);
         //track creator
         for (int i = 0; i < numBlocks; i++) {
-            g.fillRect(Blocks[i].x- camX, Blocks[i].y-camY, Blocks[i].width, Blocks[i].height);
-            
+            g.fillRect(Blocks[i].x - camX, Blocks[i].y - camY, Blocks[i].width, Blocks[i].height);
+
         }
-        
-        
+
+
         //hitbox
         g.setColor(Color.RED);
         g.drawRect(eyeFront.x - camX, eyeFront.y - camY, eyeFront.width, eyeFront.height);
         g.setColor(Color.PINK);
         g.drawRect(eyeL1.x - camX, eyeL1.y - camY, eyeL1.width, eyeL1.height);
         g.drawRect(eyeR1.x - camX, eyeR1.y - camY, eyeR1.width, eyeR1.height);
-        
+
         g.setColor(Color.BLACK);
         for (int i = 1; i < tireMarks; i++) {
-            g.translate(tireX[i] -camX, tireY[i] -camY);
+            g.translate(tireX[i] - camX, tireY[i] - camY);
             g2d.rotate(Math.toRadians(tireAngle[i]));
-            g.fillRect(0,0, 2, 2);
+            g.fillRect(0, 0, 2, 2);
             g2d.rotate(Math.toRadians(-tireAngle[i]));
-            g.translate(-(tireX[i] -camX), -(tireY[i] -camY));
-            
+            g.translate(-(tireX[i] - camX), -(tireY[i] - camY));
+
         }
 
         //player car
@@ -217,6 +225,12 @@ public class CarGame extends JComponent implements ActionListener {
         g.fillRect(-6, 0, 8, 8);
         g2d.rotate(Math.toRadians(-angleAI1));
         g.translate(-(carAI1X + 333 - camX), -(carAI1Y + 268 - camY));
+        
+        g.setColor(Color.RED);
+        g.setFont(biggerFont);
+        g.drawString(""+laps, 600, 50);
+        g.setFont(smallerFont);
+        g.drawString(""+timer, 600, 75);
 
         //g.setColor(Color.PINK);
         //g.drawRect(eyeL1.x - camX, eyeL1.y - camY, eyeL1.width, eyeL1.height);
@@ -233,43 +247,64 @@ public class CarGame extends JComponent implements ActionListener {
     // This is run before the game loop begins!
     public void preSetup() {
         // Any of your pre setup before the loop starts should go here        
-    Scanner in = null;
-    try{
-    in = new Scanner(new File("Track1")); 
-    }catch (Exception e){
-        e.printStackTrace();
-    }
-    numBlocks = in.nextInt();    
-    in.nextLine();
+        Scanner in = null;
+        try {
+            in = new Scanner(new File("Track1"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        numBlocks = in.nextInt();
+        numBlocks = numBlocks - 2;
+        in.nextLine();
         for (int i = 0; i < numBlocks; i++) {
             int x = in.nextInt();
             int y = in.nextInt();
             int w = in.nextInt();
             int h = in.nextInt();
-            Blocks[i] = new Rectangle(x,y,w,h);
-                      
+            Blocks[i] = new Rectangle(x, y, w, h);
+
         }
-        
+        in.nextLine();
+        int x = in.nextInt();
+        int y = in.nextInt();
+        int w = in.nextInt();
+        int h = in.nextInt();
+        finishLine[0] = new Rectangle(x, y, w, h);
+        x = in.nextInt();
+        y = in.nextInt();
+        w = in.nextInt();
+        h = in.nextInt();
+        finishLine[1] = new Rectangle(x, y, w, h);
+
+
     }
 
     // The main game loop
     // In here is where all the logic for my game will go
     public void gameLoop() {
         //set camera over player
-        camX = carX - 300; 
+        camX = carX - 300;
         camY = carY - 200;
         carMovement();
         carCollision();
         aiCarMovement();
         aiCarCollision();
         for (int i = 1; i < tireMarks; i++) {
-            tireLife[i]= tireLife[i]-0.1; 
-            if(tireLife[i]<=0){
-            tireX[i] = -2000;
-            tireY[i] = -2000;
+            tireLife[i] = tireLife[i] - 0.1;
+            if (tireLife[i] <= 0) {
+                tireX[i] = -2000;
+                tireY[i] = -2000;
+                
+            }
         }
+        if(tireMarks>= tireX.length-1){
+            tireMarks=0;
         }
         
+        if(startAI == true){
+            timer = timer+0.1;
+        }
+
 
         //turning
         //reset angle if it is less or more than 360
@@ -280,11 +315,20 @@ public class CarGame extends JComponent implements ActionListener {
         if (turnLeft == true) {
             if (eBrake == true) {
                 angle = angle - 4;
-            tireMarks++;
-            tireX[tireMarks] = carX + 339;
-            tireY[tireMarks] = carY + 283;
-            tireAngle[tireMarks] = (int) angle;
-            tireLife[tireMarks] = 30;
+                if (tireMarks < tireX.length - 1) {
+                    tireMarks++;
+                    tireX[tireMarks] = carBoxBack.x;
+                    tireY[tireMarks] = carBoxBack.y;
+                    tireAngle[tireMarks] = (int) angle;
+                    tireLife[tireMarks] = 15;
+                } //else {
+                    //for (int i = 0; i < tireX.length; i++) {
+                     //   tireX[i] = -500;
+                     //   tireY[i] = -500;
+                     //   tireMarks = 0;
+                   // }
+
+               // }
             } else {
                 angle = angle - 2;
             }
@@ -293,12 +337,19 @@ public class CarGame extends JComponent implements ActionListener {
         if (turnRight == true) {
             if (eBrake == true) {
                 angle = angle + 4;
-            tireMarks++;
-            tireX[tireMarks] = carX + 339;
-            tireY[tireMarks] = carY + 283;
-            tireAngle[tireMarks] = (int) angle;
-            tireLife[tireMarks] = 30;
-                
+                if (tireMarks < tireX.length - 1) {
+                    tireMarks++;
+                    tireX[tireMarks] = carBoxBack.x;
+                    tireY[tireMarks] = carBoxBack.y;
+                    tireAngle[tireMarks] = (int) angle;
+                    tireLife[tireMarks] = 30;
+                } //else {
+                   // for (int i = 0; i < tireX.length; i++) {
+                    //    tireX[i] = -500;
+                    //    tireY[i] = -500;
+                    //    tireMarks = 0;
+                   // }
+                //}
             } else {
                 angle = angle + 2;
             }
@@ -333,10 +384,9 @@ public class CarGame extends JComponent implements ActionListener {
             carY = carY + (int) carYD;
             carX = carX + (int) carXD;
         }
-        
+
         if (eBrake == true) {
-            
-        } 
+        }
     }
 
     private void carCollision() {
@@ -357,6 +407,16 @@ public class CarGame extends JComponent implements ActionListener {
                 accel = 3;
                 deaccel = 0;
 
+            }
+        }
+        if(carBox.intersects(finishLine[1])){
+            halfway = true;
+        }
+        if(carBox.intersects(finishLine[0])){
+            if(halfway == true){
+                laps++;
+                halfway = false;
+                
             }
         }
 
@@ -390,7 +450,7 @@ public class CarGame extends JComponent implements ActionListener {
     private void aiCarCollision() {
         double newAI1Angle = Math.toRadians(angleAI1);
         boolean lEyeFirst = false;
-        boolean rEyeFirst = false;        
+        boolean rEyeFirst = false;
         int lastTurn = 0;
         //create all the AI's hitboxes and eyes
         eyeL1.x = (int) (carAI1X + 328 + 65 * (Math.cos(newAI1Angle - Math.toRadians(118.3))));
@@ -412,14 +472,14 @@ public class CarGame extends JComponent implements ActionListener {
                     //if the right eye also hits turn left and slow down
                     if (eyeL1.intersects(Blocks[i]) && eyeR1.intersects(Blocks[i])) {
                         deaccelAI1 = -8;
-                        accelAI1 = accelAI1 + 0.5*deaccelAI1;
+                        accelAI1 = accelAI1 + 0.5 * deaccelAI1;
                         allEyeHit = true;
                         //if neither eye hits sloooowww down and turn the same as the last time you turned
                     } else if (!(eyeL1.intersects(Blocks[i])) && !(eyeR1.intersects(Blocks[i]))) {
                         //twoEyeHit = true;
                         deaccelAI1 = -8;
-                                                
-                        angleAI1 = angleAI1 + lastTurn; 
+
+                        angleAI1 = angleAI1 + lastTurn;
                         allEyeHit = false;
                         //if right eye hits turn left
                     } else if (eyeR1.intersects(Blocks[i])) {
@@ -440,22 +500,22 @@ public class CarGame extends JComponent implements ActionListener {
                     lastTurn = -5;
                     allEyeHit = true;
                     //if only the left eye hits turn left and slow down
-                }else if (eyeL1.intersects(Blocks[i])) {
+                } else if (eyeL1.intersects(Blocks[i])) {
                     angleAI1 = angleAI1 + 8;
                     deaccelAI1 = -3;
                     lastTurn = 5;
                     allEyeHit = true;
 
                 }
-                
+
                 //if AI hits wall head on
                 if (carAI1Box.intersects(Blocks[i])) {
-                    deaccelAI1 = -18; 
+                    deaccelAI1 = -18;
                     accelAI1 = 0;
                     angleAI1 = angleAI1 + lastTurn;
-                    
+
                 }
-               
+
                 if (carAI1BoxBack.intersects(Blocks[i])) {
                     if (eyeR1.intersects(Blocks[i]) && !(eyeL1.intersects(Blocks[i]))) {
                         angleAI1 = angleAI1 - 6;
