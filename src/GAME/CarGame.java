@@ -50,8 +50,8 @@ public class CarGame extends JComponent implements ActionListener {
     boolean turnRight = false;
     boolean eBrake = false;
     boolean boost = false;
-    int carX = 0;
-    int carY = 0;
+    int carX = 50;
+    int carY = 280;
     int tireMarks = 0;
     int[] tireX = new int[400];
     int[] tireY = new int[400];
@@ -78,8 +78,8 @@ public class CarGame extends JComponent implements ActionListener {
     double accelAI1 = 0;
     double deaccelAI1 = 0;
     double angleAI1 = 0;
-    int carAI1X = 0;
-    int carAI1Y = 0;
+    int carAI1X = 30;
+    int carAI1Y = 280;
     boolean turnLeftAI1 = false;
     boolean turnRightAI1 = false;
     boolean gasAI1 = false;
@@ -137,6 +137,7 @@ public class CarGame extends JComponent implements ActionListener {
 
         // GAME DRAWING GOES HERE
         //angle number
+        
         g.setColor(Color.RED);        
         g.fillRect(finishLine[0].x - camX, finishLine[0].y - camY, finishLine[0].width, finishLine[0].height);
         
@@ -149,11 +150,11 @@ public class CarGame extends JComponent implements ActionListener {
 
 
         //hitbox
-        g.setColor(Color.RED);
-        g.drawRect(eyeFront.x - camX, eyeFront.y - camY, eyeFront.width, eyeFront.height);
-        g.setColor(Color.PINK);
-        g.drawRect(eyeL1.x - camX, eyeL1.y - camY, eyeL1.width, eyeL1.height);
-        g.drawRect(eyeR1.x - camX, eyeR1.y - camY, eyeR1.width, eyeR1.height);
+        //g.setColor(Color.RED);
+        //g.drawRect(eyeFront.x - camX, eyeFront.y - camY, eyeFront.width, eyeFront.height);
+        //g.setColor(Color.PINK);
+        //g.drawRect(eyeL1.x - camX, eyeL1.y - camY, eyeL1.width, eyeL1.height);
+        //g.drawRect(eyeR1.x - camX, eyeR1.y - camY, eyeR1.width, eyeR1.height);
 
         g.setColor(Color.BLACK);
         for (int i = 1; i < tireMarks; i++) {
@@ -164,22 +165,20 @@ public class CarGame extends JComponent implements ActionListener {
             g.translate(-(tireX[i] - camX), -(tireY[i] - camY));
 
         }
-        g.setColor(Color.RED);
-        g.setFont(biggerFont);
-        g.drawString("" + laps, 600, 50);
+        g.setColor(Color.RED);               
         g.setFont(smallerFont);
-        g.drawString("" + timerSec/1000, 590, 75);
-        
-        g.drawString("Laps:", 0, 20);
+        g.drawString("" + timerSec/1000, 590, 50);
+                
+        g.drawString("Laps: "+ (laps+1), 0, 20);        
         for (int i = 0; i < laps; i++) {
             g.drawString("Lap "+ (i+1) + ": "+ lapTimes[i], 0, 50+(i*25));
         }
         
-        g.setFont(biggestFont);
-        if(countDown > 300){
-        g.drawString("5", 600, 300);
+        g.setFont(biggestFont);        
+         if(countDown > 300 && countDown < 359){
+        g.drawString("5", 600, 300);        
         }else if (countDown > 240 && countDown < 300){
-            g.drawString("4", 600, 300);
+            g.drawString("4", 600, 300);            
         }else if (countDown > 180 && countDown < 240){
             g.drawString("3", 600, 300);
         }else if (countDown > 120 && countDown < 180){
@@ -258,7 +257,20 @@ public class CarGame extends JComponent implements ActionListener {
         g2d.rotate(Math.toRadians(-angleAI1));
         g.translate(-(carAI1X + 333 - camX), -(carAI1Y + 268 - camY));
 
-        
+        g.setFont(biggestFont);
+        if(countDown > 359){
+            g.setColor(Color.WHITE);
+            g.clearRect(0, 0, WIDTH, HEIGHT);
+            g.setColor(Color.RED);
+            g.drawString("Controls: ", 20, 300);
+            g.setColor(Color.BLACK);
+            g.drawString("W to move forward ", 20, 360);
+            g.drawString("A and D to turn ", 20, 420);
+            g.drawString("S to slow down ", 20, 480);
+            g.drawString("SPACE to use E brake ", 20, 540);
+            g.drawString("ENTER to start race ", 20, 600);
+            
+        }
 
         //g.setColor(Color.PINK);
         //g.drawRect(eyeL1.x - camX, eyeL1.y - camY, eyeL1.width, eyeL1.height);
@@ -461,7 +473,7 @@ public class CarGame extends JComponent implements ActionListener {
         if (carBox.intersects(finishLine[0])) {
             if (halfway == true) { 
                 if(laps == 0){
-                    lapTimes[laps] = timerSec/1000;
+                    lapTimes[laps] = Math.round(timerSec);
                 }else{
                     if(lapTimes[laps]==0){
                     lapTimes[laps] = timerSec/1000;
