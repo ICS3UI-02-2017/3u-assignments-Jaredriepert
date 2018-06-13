@@ -53,10 +53,11 @@ public class CarGame extends JComponent implements ActionListener {
     int carX = 0;
     int carY = 0;
     int tireMarks = 0;
-    int[] tireX = new int[200];
-    int[] tireY = new int[200];
-    int[] tireAngle = new int[200];
-    double[] tireLife = new double[200];
+    int[] tireX = new int[400];
+    int[] tireY = new int[400];
+    int[] tireAngle = new int[400];
+    double[] lapTimes = new double[10];
+    double[] tireLife = new double[400];
     int camX = 0;
     int camY = 0;
     Rectangle carBox = new Rectangle(carX, carY, 12, 12);
@@ -68,7 +69,10 @@ public class CarGame extends JComponent implements ActionListener {
     int laps = 0;
     boolean halfway = false;
     boolean crossFinish = false;
-    double timer = 0;
+    boolean startGame = false;
+    boolean startPlayer = false;
+    double timerSec = 0;   
+    int countDown = 360;
     //AI variables
     double speedAI1 = 0;
     double accelAI1 = 0;
@@ -86,9 +90,10 @@ public class CarGame extends JComponent implements ActionListener {
     Rectangle eyeL1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeR1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeFront = new Rectangle(carAI1X, carAI1Y, 3, 3);
-    
+    Font biggestFont = new Font("arial", Font.BOLD, 72);
     Font biggerFont = new Font("arial", Font.BOLD, 36);
     Font smallerFont = new Font("arial", Font.BOLD, 28);
+    double timeStart = 0;
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -132,10 +137,9 @@ public class CarGame extends JComponent implements ActionListener {
 
         // GAME DRAWING GOES HERE
         //angle number
-        g.setColor(Color.RED);
-        for (int i = 0; i < 2; i++) {
-            g.fillRect(finishLine[i].x - camX, finishLine[i].y - camY, finishLine[i].width, finishLine[i].height);
-        }
+        g.setColor(Color.RED);        
+        g.fillRect(finishLine[0].x - camX, finishLine[0].y - camY, finishLine[0].width, finishLine[0].height);
+        
         g.setColor(Color.BLACK);
         //track creator
         for (int i = 0; i < numBlocks; i++) {
@@ -160,6 +164,34 @@ public class CarGame extends JComponent implements ActionListener {
             g.translate(-(tireX[i] - camX), -(tireY[i] - camY));
 
         }
+        g.setColor(Color.RED);
+        g.setFont(biggerFont);
+        g.drawString("" + laps, 600, 50);
+        g.setFont(smallerFont);
+        g.drawString("" + timerSec/1000, 590, 75);
+        
+        g.drawString("Laps:", 0, 20);
+        for (int i = 0; i < laps; i++) {
+            g.drawString("Lap "+ (i+1) + ": "+ lapTimes[i], 0, 50+(i*25));
+        }
+        
+        g.setFont(biggestFont);
+        if(countDown > 300){
+        g.drawString("5", 600, 300);
+        }else if (countDown > 240 && countDown < 300){
+            g.drawString("4", 600, 300);
+        }else if (countDown > 180 && countDown < 240){
+            g.drawString("3", 600, 300);
+        }else if (countDown > 120 && countDown < 180){
+            g.drawString("2", 600, 300);
+        }else if (countDown > 60 && countDown < 120){
+            g.drawString("1", 600, 300);
+        }else if (countDown > 1 && countDown < 60){
+            g.drawString("GO!", 600, 300);
+            startAI = true;
+            startPlayer = true;
+        }
+        
 
         //player car
         g.setColor(Color.BLUE);
@@ -225,12 +257,8 @@ public class CarGame extends JComponent implements ActionListener {
         g.fillRect(-6, 0, 8, 8);
         g2d.rotate(Math.toRadians(-angleAI1));
         g.translate(-(carAI1X + 333 - camX), -(carAI1Y + 268 - camY));
+
         
-        g.setColor(Color.RED);
-        g.setFont(biggerFont);
-        g.drawString(""+laps, 600, 50);
-        g.setFont(smallerFont);
-        g.drawString(""+timer, 600, 75);
 
         //g.setColor(Color.PINK);
         //g.drawRect(eyeL1.x - camX, eyeL1.y - camY, eyeL1.width, eyeL1.height);
@@ -289,20 +317,36 @@ public class CarGame extends JComponent implements ActionListener {
         carCollision();
         aiCarMovement();
         aiCarCollision();
+        //if a tire mark dies, move it away
         for (int i = 1; i < tireMarks; i++) {
             tireLife[i] = tireLife[i] - 0.1;
             if (tireLife[i] <= 0) {
                 tireX[i] = -2000;
                 tireY[i] = -2000;
-                
+
             }
         }
-        if(tireMarks>= tireX.length-1){
-            tireMarks=0;
+        //if I have more tire marks than im supposed to have reset them to 0
+        if (tireMarks >= tireX.length - 1) {
+            tireMarks = 0;
         }
         
-        if(startAI == true){
-            timer = timer+0.1;
+        //display time 
+        if (startAI == true) {
+            if (timeStart == 0) {
+                timeStart = System.currentTimeMillis();
+            }
+            timerSec = System.currentTimeMillis() - timeStart;
+        }
+        
+        //start game!!!
+        if(startGame == true){
+            if(countDown > 0){
+            countDown = countDown-2;
+            }
+            
+            
+            
         }
 
 
@@ -322,13 +366,13 @@ public class CarGame extends JComponent implements ActionListener {
                     tireAngle[tireMarks] = (int) angle;
                     tireLife[tireMarks] = 15;
                 } //else {
-                    //for (int i = 0; i < tireX.length; i++) {
-                     //   tireX[i] = -500;
-                     //   tireY[i] = -500;
-                     //   tireMarks = 0;
-                   // }
+                //for (int i = 0; i < tireX.length; i++) {
+                //   tireX[i] = -500;
+                //   tireY[i] = -500;
+                //   tireMarks = 0;
+                // }
 
-               // }
+                // }
             } else {
                 angle = angle - 2;
             }
@@ -344,11 +388,11 @@ public class CarGame extends JComponent implements ActionListener {
                     tireAngle[tireMarks] = (int) angle;
                     tireLife[tireMarks] = 30;
                 } //else {
-                   // for (int i = 0; i < tireX.length; i++) {
-                    //    tireX[i] = -500;
-                    //    tireY[i] = -500;
-                    //    tireMarks = 0;
-                   // }
+                // for (int i = 0; i < tireX.length; i++) {
+                //    tireX[i] = -500;
+                //    tireY[i] = -500;
+                //    tireMarks = 0;
+                // }
                 //}
             } else {
                 angle = angle + 2;
@@ -409,14 +453,28 @@ public class CarGame extends JComponent implements ActionListener {
 
             }
         }
-        if(carBox.intersects(finishLine[1])){
+        
+        if (carBox.intersects(finishLine[1])) {
             halfway = true;
         }
-        if(carBox.intersects(finishLine[0])){
-            if(halfway == true){
+        //when crossed finish line
+        if (carBox.intersects(finishLine[0])) {
+            if (halfway == true) { 
+                if(laps == 0){
+                    lapTimes[laps] = timerSec/1000;
+                }else{
+                    if(lapTimes[laps]==0){
+                    lapTimes[laps] = timerSec/1000;
+                    }
+                    for (int i = laps-1; i >=0; i--) {
+                        lapTimes[laps] = lapTimes[laps] -lapTimes[i];
+                    }
+                    
+                }              
+                
                 laps++;
                 halfway = false;
-                
+
             }
         }
 
@@ -580,6 +638,8 @@ public class CarGame extends JComponent implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             int keyCode = e.getKeyCode();
+            //only when the player is allowed to move accept the movement
+            if(startPlayer == true){            
             if (keyCode == KeyEvent.VK_W) {
                 gas = true;
             }
@@ -591,6 +651,7 @@ public class CarGame extends JComponent implements ActionListener {
             }
             if (keyCode == KeyEvent.VK_S) {
                 brake = true;
+            }
             }
             if (keyCode == KeyEvent.VK_UP) {
                 //gasAI1 = true;
@@ -610,7 +671,7 @@ public class CarGame extends JComponent implements ActionListener {
                 boost = true;
             }
             if (keyCode == KeyEvent.VK_ENTER) {
-                startAI = true;
+                startGame = true;
             }
         }
 
