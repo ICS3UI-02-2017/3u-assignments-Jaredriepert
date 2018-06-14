@@ -73,6 +73,10 @@ public class CarGame extends JComponent implements ActionListener {
     boolean startPlayer = false;
     double timerSec = 0;   
     int countDown = 360;
+    String trackName = "Track1";
+    int mX = 0;
+    int mY = 0;
+    boolean click = false;
     //AI variables
     double speedAI1 = 0;
     double accelAI1 = 0;
@@ -259,9 +263,20 @@ public class CarGame extends JComponent implements ActionListener {
 
         g.setFont(biggestFont);
         if(countDown > 359){
-            g.setColor(Color.WHITE);
+            g.setColor(Color.WHITE);            
             g.clearRect(0, 0, WIDTH, HEIGHT);
+            g.setColor(Color.BLACK);
+            g.fillRect(900, 300, 75, 50);
+            g.setColor(Color.BLACK);
+            g.fillRect(900, 500, 75, 50);
             g.setColor(Color.RED);
+            g.setFont(smallerFont);
+            g.drawString("Track", 900, 320);
+            g.drawString("1", 937, 340);
+            g.drawString("Track", 900, 520);
+            g.drawString("2", 937, 540);
+            g.setColor(Color.RED);
+            g.setFont(biggestFont);
             g.drawString("Controls: ", 20, 300);
             g.setColor(Color.BLACK);
             g.drawString("W to move forward ", 20, 360);
@@ -289,7 +304,7 @@ public class CarGame extends JComponent implements ActionListener {
         // Any of your pre setup before the loop starts should go here        
         Scanner in = null;
         try {
-            in = new Scanner(new File("Track1"));
+            in = new Scanner(new File("Track2"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -352,6 +367,9 @@ public class CarGame extends JComponent implements ActionListener {
         }
         
         //start game!!!
+        if(startGame == false){
+            
+        }
         if(startGame == true){
             if(countDown > 0){
             countDown = countDown-2;
@@ -473,10 +491,10 @@ public class CarGame extends JComponent implements ActionListener {
         if (carBox.intersects(finishLine[0])) {
             if (halfway == true) { 
                 if(laps == 0){
-                    lapTimes[laps] = Math.round(timerSec);
+                    lapTimes[laps] = (Math.round(timerSec))/1000.0;
                 }else{
                     if(lapTimes[laps]==0){
-                    lapTimes[laps] = timerSec/1000;
+                    lapTimes[laps] = (Math.round(timerSec))/1000.0;
                     }
                     for (int i = laps-1; i >=0; i--) {
                         lapTimes[laps] = lapTimes[laps] -lapTimes[i];
@@ -625,11 +643,15 @@ public class CarGame extends JComponent implements ActionListener {
         // if a mouse button has been pressed down
         @Override
         public void mousePressed(MouseEvent e) {
+            mX = e.getX();
+            mY = e.getY();
+           click = true;
         }
 
         // if a mouse button has been released
         @Override
         public void mouseReleased(MouseEvent e) {
+            click = false; 
         }
 
         // if the scroll wheel has been moved
@@ -639,7 +661,7 @@ public class CarGame extends JComponent implements ActionListener {
 
         // if the mouse has moved positions
         @Override
-        public void mouseMoved(MouseEvent e) {
+        public void mouseMoved(MouseEvent e) {            
         }
     }
 
