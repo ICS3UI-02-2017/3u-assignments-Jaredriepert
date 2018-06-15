@@ -77,6 +77,7 @@ public class CarGame extends JComponent implements ActionListener {
     int mX = 0;
     int mY = 0;
     boolean click = false;
+    double timeStart = 0;
     //AI variables
     double speedAI1 = 0;
     double accelAI1 = 0;
@@ -94,10 +95,28 @@ public class CarGame extends JComponent implements ActionListener {
     Rectangle eyeL1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeR1 = new Rectangle(carAI1X, carAI1Y, 3, 3);
     Rectangle eyeFront = new Rectangle(carAI1X, carAI1Y, 3, 3);
+    //AI 2
+    double speedAI2 = 0;
+    double accelAI2 = 0;
+    double deaccelAI2 = 0;
+    double angleAI2 = 0;
+    int carAI2X =0;
+    int carAI2Y = 280;
+    boolean turnLeftAI2 = false;
+    boolean turnRightAI2 = false;
+    boolean gasAI2 = false;
+    boolean startA2 = false;
+    boolean allEyeHit2 = false;
+    Rectangle carAI2Box = new Rectangle(carAI2X, carAI2Y, 12, 12);
+    Rectangle carAI2BoxBack = new Rectangle(carAI2X, carAI2Y, 3, 3);
+    Rectangle eyeL2 = new Rectangle(carAI2X, carAI2Y, 3, 3);
+    Rectangle eyeR2 = new Rectangle(carAI2X, carAI2Y, 3, 3);
+    Rectangle eyeFront2 = new Rectangle(carAI2X, carAI2Y, 3, 3);
+    //fonts
     Font biggestFont = new Font("arial", Font.BOLD, 72);
     Font biggerFont = new Font("arial", Font.BOLD, 36);
     Font smallerFont = new Font("arial", Font.BOLD, 28);
-    double timeStart = 0;
+    
 
     // GAME VARIABLES END HERE    
     // Constructor to create the Frame and place the panel in
@@ -261,6 +280,38 @@ public class CarGame extends JComponent implements ActionListener {
         g.fillRect(-6, 0, 8, 8);
         g2d.rotate(Math.toRadians(-angleAI1));
         g.translate(-(carAI1X + 333 - camX), -(carAI1Y + 268 - camY));
+        //AI2 car
+        g.setColor(Color.ORANGE);
+        //frontLeftWheel
+        g.translate(carAI2X + 328 - camX, carAI2Y + 272 - camY);
+        g2d.rotate(Math.toRadians(angleAI2));
+        g.fillRect(-6, 0, 6, 6);
+        g.translate(-(carAI2X + 328 - camX), -(carAI2Y + 272 - camY));
+        //frontRightWheel
+        g.translate(carAI2X + 339 - camX, carAI2Y + 272 - camY);
+        g.fillRect(-6, 0, 6, 6);
+        g.translate(-(carAI2X + 339 - camX), -(carAI2Y + 272 - camY));
+        //backRightWheel
+        g.translate(carAI2X + 339 - camX, carAI2Y + 283 - camY);
+        g.fillRect(-6, 0, 6, 6);
+        g.translate(-(carAI2X + 339 - camX), -(carAI2Y + 283 - camY));
+        //backLeftWheel
+        g.translate(carAI2X + 328 - camX, carAI2Y + 283 - camY);
+        g.fillRect(-6, 0, 6, 6);
+        g.translate(-(carAI2X + 328 - camX), -(carAI2Y + 283 - camY));
+        //boddy
+        g.translate(carAI2X + 331 - camX, carAI2Y + 279 - camY);
+        g.fillRect(-6, 0, 12, 12);
+        g.translate(-(carAI2X + 331 - camX), -(carAI2Y + 279 - camY));
+        //body
+        g.translate(carAI2X + 331 - camX, carAI2Y + 270 - camY);
+        g.fillRect(-6, 0, 12, 12);
+        g.translate(-(carAI2X + 331 - camX), -(carAI2Y + 270 - camY));
+        //frontbody
+        g.translate(carAI2X + 333 - camX, carAI2Y + 268 - camY);
+        g.fillRect(-6, 0, 8, 8);
+        g2d.rotate(Math.toRadians(-angleAI2));
+        g.translate(-(carAI2X + 333 - camX), -(carAI2Y + 268 - camY));
 
         g.setFont(biggestFont);
         if(countDown > 359){
@@ -331,6 +382,8 @@ public class CarGame extends JComponent implements ActionListener {
         w = in.nextInt();
         h = in.nextInt();
         finishLine[1] = new Rectangle(x, y, w, h);
+        
+        
     }
 
     
@@ -554,6 +607,7 @@ public class CarGame extends JComponent implements ActionListener {
 
     private void aiCarMovement() {
         double newAI1Angle = Math.toRadians(angleAI1 - 90);
+        double newAI2Angle = Math.toRadians(angleAI2 - 90);
         //move the AI when active
         if (startAI == true) {
             if (accelAI1 < 12) {
@@ -564,8 +618,19 @@ public class CarGame extends JComponent implements ActionListener {
             if (deaccelAI1 < 0) {
                 deaccelAI1 = deaccelAI1 + 0.2;
             }
+        
+        
+            if (accelAI2 < 12) {
+                accelAI2 = accelAI2 + 0.08;
+                speedAI2 = accelAI2 + deaccelAI2;
+            }
+
+            if (deaccelAI2 < 0) {
+                deaccelAI2 = deaccelAI2 + 0.2;
+            }
 
         }
+        
         //calcualte the distance for the AI to travel at
         if (true) {
             speedAI1 = accelAI1 + deaccelAI1;
@@ -573,7 +638,17 @@ public class CarGame extends JComponent implements ActionListener {
             double carAI1YD = Math.sin(newAI1Angle) * speedAI1;
             carAI1Y = carAI1Y + (int) carAI1YD;
             carAI1X = carAI1X + (int) carAI1XD;
+            //calcualte the distance for the AI to travel at
+        
+            speedAI2 = accelAI2 + deaccelAI2;
+            double carAI2XD = Math.cos(newAI2Angle) * speedAI2;
+            double carAI2YD = Math.sin(newAI2Angle) * speedAI2;
+            carAI2Y = carAI2Y + (int) carAI2YD;
+            carAI2X = carAI2X + (int) carAI2XD;
         }
+        
+        
+        
 
     }
 
@@ -674,6 +749,107 @@ public class CarGame extends JComponent implements ActionListener {
             //reset angle if greater than or las than 360
             if (angleAI1 > 360 || angleAI1 < -360) {
                 angleAI1 = 0;
+            }
+
+        }
+        
+        //AI2
+        double newAI2Angle = Math.toRadians(angleAI2);
+        boolean lEyeFirst2 = false;
+        boolean rEyeFirst2 = false;
+        int lastTurn2 = 0;
+        //create all the AI's hitboxes and eyes
+        eyeL2.x = (int) (carAI2X + 328 + 65 * (Math.cos(newAI2Angle - Math.toRadians(118.3))));
+        eyeL2.y = (int) (carAI2Y + 272 + 65 * (Math.sin(newAI2Angle - Math.toRadians(118.3))));
+        eyeR2.x = (int) (carAI2X + 339 + 65 * (Math.cos(newAI2Angle - Math.toRadians(61.7))));
+        eyeR2.y = (int) (carAI2Y + 272 + 65 * (Math.sin(newAI2Angle - Math.toRadians(61.7))));
+        eyeFront2.x = (int) (carAI2X + 334 + 88 * (Math.cos(newAI2Angle - Math.toRadians(90))));
+        eyeFront2.y = (int) (carAI2Y + 272 + 88 * (Math.sin(newAI2Angle - Math.toRadians(90))));
+
+        carAI2Box.x = (int) (carAI2X + 328 - 2 + 9.6 * (Math.cos(newAI2Angle + Math.toRadians(51))) - (carAI2Box.width / 2));
+        carAI2Box.y = (int) (carAI2Y + 272 + 9.6 * (Math.sin(newAI2Angle + Math.toRadians(51))) - (carAI2Box.height / 2));
+        carAI2BoxBack.x = (int) (carAI2X + 328 - 3 + 16.15 * (Math.cos(newAI2Angle + Math.toRadians(68))));
+        carAI2BoxBack.y = (int) (carAI2Y + 272 + 16.15 * (Math.sin(newAI2Angle + Math.toRadians(68))));
+        //if an AI eye hits a wall turn him, if a hitbox hits a wall bounce off
+        if (startAI == true) {
+            //if front eye hits a wall, check for for other colisions
+            for (int i = 1; i < numBlocks; i++) {
+                if (eyeFront2.intersects(Blocks[i])) {
+                    //if the right eye also hits turn left and slow down
+                    if (eyeL2.intersects(Blocks[i]) && eyeR2.intersects(Blocks[i])) {
+                        deaccelAI2 = -8;
+                        accelAI2 = accelAI2 + 0.5 * deaccelAI2;
+                        allEyeHit2 = true;
+                        //if neither eye hits sloooowww down and turn the same as the last time you turned
+                    } else if (!(eyeL2.intersects(Blocks[i])) && !(eyeR2.intersects(Blocks[i]))) {
+                        //twoEyeHit = true;
+                        deaccelAI2 = -8;
+
+                        angleAI2 = angleAI2 + lastTurn2;
+                        allEyeHit2 = false;
+                        //if right eye hits turn left
+                    } else if (eyeR2.intersects(Blocks[i])) {
+                        angleAI2 = angleAI2 - 8;
+                        deaccelAI2 = -3;
+                        lastTurn2 = -8;
+                        //if left eye hits turn right
+                    } else if (eyeL2.intersects(Blocks[i])) {
+                        angleAI2 = angleAI2 + 8;
+                        deaccelAI2 = -3;
+                        lastTurn2 = 8;
+                    }
+                }
+                //if only the right eye hits turn left and slow down
+                if (eyeR2.intersects(Blocks[i])) {
+                    angleAI2 = angleAI2 - 8;
+                    deaccelAI2 = -3;
+                    lastTurn2 = -5;
+                    allEyeHit2 = true;
+                    //if only the left eye hits turn left and slow down
+                } else if (eyeL2.intersects(Blocks[i])) {
+                    angleAI2 = angleAI2 + 8;
+                    deaccelAI2 = -3;
+                    lastTurn2 = 5;
+                    allEyeHit2 = true;
+
+                }
+
+                //if AI hits wall head on
+                if (carAI2Box.intersects(Blocks[i])) {
+                    deaccelAI2 = -18;
+                    accelAI2 = 0;
+                    angleAI2 = angleAI2 + lastTurn2;
+
+                }
+
+                if (carAI2BoxBack.intersects(Blocks[i])) {
+                    if (eyeR2.intersects(Blocks[i]) && !(eyeL2.intersects(Blocks[i]))) {
+                        angleAI2 = angleAI2 - 6;
+                        accelAI2 = 7;
+                        deaccelAI2 = -2;
+                    }
+                    if (eyeL2.intersects(Blocks[i]) && !(eyeR2.intersects(Blocks[i]))) {
+                        angleAI2 = angleAI2 + 6;
+                        accelAI2 = 7;
+                        deaccelAI2 = -2;
+                    }
+                    if (eyeL2.intersects(Blocks[i]) && eyeR2.intersects(Blocks[i])) {
+                        angleAI2 = angleAI2 - 12;
+                        accelAI2 = 7;
+                        deaccelAI2 = -2;
+                    }
+                    if (!(eyeL2.intersects(wall[i])) && !(eyeR2.intersects(wall[i]))) {
+                        angleAI2 = angleAI2 - 6;
+                        accelAI2 = 7;
+                        deaccelAI2 = -2;
+                    }
+
+                }
+
+            }
+            //reset angle if greater than or las than 360
+            if (angleAI2 > 360 || angleAI2 < -360) {
+                angleAI2 = 0;
             }
 
         }
