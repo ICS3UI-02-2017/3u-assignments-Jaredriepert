@@ -141,7 +141,7 @@ public class CarGame extends JComponent implements ActionListener {
 
         // GAME DRAWING GOES HERE
         //angle number
-        
+        if(startGame == true){
         g.setColor(Color.RED);        
         g.fillRect(finishLine[0].x - camX, finishLine[0].y - camY, finishLine[0].width, finishLine[0].height);
         
@@ -149,6 +149,7 @@ public class CarGame extends JComponent implements ActionListener {
         //track creator
         for (int i = 0; i < numBlocks; i++) {
             g.fillRect(Blocks[i].x - camX, Blocks[i].y - camY, Blocks[i].width, Blocks[i].height);
+        }
 
         }
 
@@ -283,7 +284,7 @@ public class CarGame extends JComponent implements ActionListener {
             g.drawString("A and D to turn ", 20, 420);
             g.drawString("S to slow down ", 20, 480);
             g.drawString("SPACE to use E brake ", 20, 540);
-            g.drawString("ENTER to start race ", 20, 600);
+            g.drawString("Select Track to Start ", 20, 600);
             
         }
 
@@ -304,7 +305,7 @@ public class CarGame extends JComponent implements ActionListener {
         // Any of your pre setup before the loop starts should go here        
         Scanner in = null;
         try {
-            in = new Scanner(new File("Track2"));
+            in = new Scanner(new File(trackName+""));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -330,9 +331,9 @@ public class CarGame extends JComponent implements ActionListener {
         w = in.nextInt();
         h = in.nextInt();
         finishLine[1] = new Rectangle(x, y, w, h);
-
-
     }
+
+    
 
     // The main game loop
     // In here is where all the logic for my game will go
@@ -368,7 +369,18 @@ public class CarGame extends JComponent implements ActionListener {
         
         //start game!!!
         if(startGame == false){
-            
+            if(click==true){
+                if(mX > 900 && mX <975 && mY > 300 && mY < 350){
+                    trackName = "Track1";
+                    buildTrack();
+                    startGame = true;
+                }
+                if(mX > 900 && mX <975 && mY > 500 && mY < 550){
+                    trackName = "Track2";
+                    buildTrack();
+                    startGame = true;
+                }
+            }
         }
         if(startGame == true){
             if(countDown > 0){
@@ -428,6 +440,36 @@ public class CarGame extends JComponent implements ActionListener {
                 angle = angle + 2;
             }
         }
+    }
+    private void buildTrack(){
+        Scanner in = null;
+        try {
+            in = new Scanner(new File(trackName+""));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        numBlocks = in.nextInt();
+        numBlocks = numBlocks - 2;
+        in.nextLine();
+        for (int i = 0; i < numBlocks; i++) {
+            int x = in.nextInt();
+            int y = in.nextInt();
+            int w = in.nextInt();
+            int h = in.nextInt();
+            Blocks[i] = new Rectangle(x, y, w, h);
+
+        }
+        in.nextLine();
+        int x = in.nextInt();
+        int y = in.nextInt();
+        int w = in.nextInt();
+        int h = in.nextInt();
+        finishLine[0] = new Rectangle(x, y, w, h);
+        x = in.nextInt();
+        y = in.nextInt();
+        w = in.nextInt();
+        h = in.nextInt();
+        finishLine[1] = new Rectangle(x, y, w, h);
     }
 
     private void carMovement() {
