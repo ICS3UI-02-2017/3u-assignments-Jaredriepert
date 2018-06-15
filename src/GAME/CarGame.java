@@ -67,9 +67,11 @@ public class CarGame extends JComponent implements ActionListener {
     Rectangle[] finishLine = new Rectangle[2];
     int numBlocks = 0;
     int laps = 0;
+    int maxLaps = 3;
     boolean halfway = false;
     boolean crossFinish = false;
     boolean startGame = false;
+    boolean endGame = false;
     boolean startPlayer = false;
     double timerSec = 0;   
     int countDown = 360;
@@ -193,7 +195,7 @@ public class CarGame extends JComponent implements ActionListener {
         g.setFont(smallerFont);
         g.drawString("" + timerSec/1000, 590, 50);
                 
-        g.drawString("Laps: "+ (laps+1), 0, 20);        
+        g.drawString("Laps: "+ (laps), 0, 20);        
         for (int i = 0; i < laps; i++) {
             g.drawString("Lap "+ (i+1) + ": "+ lapTimes[i], 0, 50+(i*25));
         }
@@ -338,6 +340,12 @@ public class CarGame extends JComponent implements ActionListener {
             g.drawString("Select Track to Start ", 20, 600);
             
         }
+        if(endGame == true){
+            g.setColor(Color.RED);
+            g.setFont(biggestFont);
+            g.drawString("FINISHED!", 400, 500);
+            
+        }
 
         //g.setColor(Color.PINK);
         //g.drawRect(eyeL1.x - camX, eyeL1.y - camY, eyeL1.width, eyeL1.height);
@@ -439,9 +447,9 @@ public class CarGame extends JComponent implements ActionListener {
             if(countDown > 0){
             countDown = countDown-2;
             }
-            
-            
-            
+        }
+        if(endGame == true){
+            startAI = false;
         }
 
 
@@ -599,6 +607,9 @@ public class CarGame extends JComponent implements ActionListener {
                 
                 laps++;
                 halfway = false;
+                if(laps == 3){
+                    endGame = true;
+                }
 
             }
         }
