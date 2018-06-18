@@ -45,7 +45,8 @@ public class DrawingThing extends JComponent implements ActionListener {
     int mY = 0;
     int[] x = new int[1000];
     int[] y = new int[1000];
-    int points = 0;
+    int[] colourChoosen = new int[1000];
+    int points = 1;
     boolean stretchY = false;
     boolean stretchX = false;
     int camX = 0;
@@ -54,9 +55,11 @@ public class DrawingThing extends JComponent implements ActionListener {
     boolean moveDown = false;
     boolean moveLeft = false;
     boolean moveRight = false;
-    int numBlocks = 0;
+    int numBlocks = 1;
     int numBlocksLoad = 0;
     boolean endDrawing = false;
+    Color colourSelect = new Color(0,0,0);
+    int colourNum = 1;
     Rectangle[] Blocks = new Rectangle[1000];
 
     // GAME VARIABLES END HERE    
@@ -99,27 +102,110 @@ public class DrawingThing extends JComponent implements ActionListener {
         g.clearRect(0, 0, WIDTH, HEIGHT);
 
         // GAME DRAWING GOES HERE
-
-        g.setColor(Color.BLACK);
+        
+        g.setColor(colourSelect);
+        //HUD
+        g.drawString("Colour Wheel is the number keys!!!", 20, 20);
         //track creator
         for (int i = 0; i < numBlocksLoad; i++) {
             if (Blocks[i] != null) {
+                if(colourChoosen[i]==1){
+                colourSelect = new Color(0,0,0);
+              g.setColor(colourSelect);  
+            }else if(colourChoosen[i]==2){
+                colourSelect = new Color(255,0,0);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==3){
+                colourSelect = new Color(0,0,255);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==4){
+                colourSelect = new Color(0,255,0);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==5){
+                colourSelect = new Color(255,0,255);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==6){
+                colourSelect = new Color(0,255,135);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==7){
+                colourSelect = new Color(255,136,0);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==8){
+                colourSelect = new Color(0,161,255);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==9){
+                colourSelect = new Color(137,137,137);
+              g.setColor(colourSelect);
+            }
                 g.fillRect(Blocks[i].x - camX, Blocks[i].y - camY, Blocks[i].width, Blocks[i].height);
             }
 
         }
         g.setColor(Color.BLUE);
         g.fillRect(328 - camX, 272 - camY, 12, 15);
-        for (int i = 0; i < points; i++) {
-            g.setColor(Color.BLACK);
+        for (int i = 1; i < points; i++) {
+            if(colourChoosen[i]==1){
+                colourSelect = new Color(0,0,0);
+              g.setColor(colourSelect);  
+            }else if(colourChoosen[i]==2){
+                colourSelect = new Color(255,0,0);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==3){
+                colourSelect = new Color(0,0,255);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==4){
+                colourSelect = new Color(0,255,0);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==5){
+                colourSelect = new Color(255,0,255);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==6){
+                colourSelect = new Color(0,255,135);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==7){
+                colourSelect = new Color(255,136,0);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==8){
+                colourSelect = new Color(0,161,255);
+              g.setColor(colourSelect);
+            }else if(colourChoosen[i]==9){
+                colourSelect = new Color(137,137,137);
+              g.setColor(colourSelect);
+            }                      
             g.fillRect(x[i] - (sizeX[i] / 2) - camX, y[i] - (sizeY[i] / 2) - camY, sizeX[i], sizeY[i]);
 
-
         }
-        g.setColor(Color.RED);
+        if(colourNum==1){
+                colourSelect = new Color(0,0,0);
+              g.setColor(colourSelect);  
+            }else if(colourNum==2){
+                colourSelect = new Color(255,0,0);
+              g.setColor(colourSelect);
+            }else if(colourNum==3){
+                colourSelect = new Color(0,0,255);
+              g.setColor(colourSelect);
+            }else if(colourNum==4){
+                colourSelect = new Color(0,255,0);
+              g.setColor(colourSelect);
+            }else if(colourNum==5){
+                colourSelect = new Color(255,0,255);
+              g.setColor(colourSelect);
+            }else if(colourNum==6){
+                colourSelect = new Color(0,255,135);
+              g.setColor(colourSelect);
+            }else if(colourNum==7){
+                colourSelect = new Color(255,136,0);
+              g.setColor(colourSelect);
+            }else if(colourNum==8){
+                colourSelect = new Color(0,161,255);
+              g.setColor(colourSelect);
+            }else if(colourNum==9){
+                colourSelect = new Color(137,137,137);
+              g.setColor(colourSelect);
+            }         
         g.fillRect(mX - (currentSizeX / 2), mY - (currentSizeY / 2), currentSizeX, currentSizeY);
         if (endDrawing == true) {
-            g.drawString("DONE", 0 - camX, 0 - camY);
+            g.drawString("DONE", 50, 50);
         }
 
 
@@ -138,7 +224,7 @@ public class DrawingThing extends JComponent implements ActionListener {
         }
         Scanner in = null;
         try {
-            in = new Scanner(new File("Track2"));
+            in = new Scanner(new File("Test"));
         } catch (Exception e) {
             // e.printStackTrace();
         }
@@ -152,12 +238,14 @@ public class DrawingThing extends JComponent implements ActionListener {
             int y = in.nextInt();
             int w = in.nextInt();
             int h = in.nextInt();
+            int c = in.nextInt();            
             Blocks[i] = new Rectangle(x, y, w, h);
+            colourChoosen[i] = c;
 
         }
         in.close();
         try {
-            in = new Scanner(new File("Track2"));
+            in = new Scanner(new File("Test"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -171,6 +259,8 @@ public class DrawingThing extends JComponent implements ActionListener {
             System.out.print(in.nextInt());
             System.out.print(" ");
             System.out.print(in.nextInt());
+            System.out.print(" ");
+            System.out.print(in.nextInt());                       
             System.out.println("");
 
         }
@@ -202,10 +292,30 @@ public class DrawingThing extends JComponent implements ActionListener {
         public void mousePressed(MouseEvent e) {
             x[points] = mX + camX;
             y[points] = mY + camY;
+            colourChoosen[points] = colourNum;
+            if(colourChoosen[points]==1){
+                colourSelect = new Color(0,0,0);               
+            }else if(colourChoosen[points]==2){
+                colourSelect = new Color(255,0,0);              
+            }else if(colourChoosen[points]==3){
+                colourSelect = new Color(0,0,255);              
+            }else if(colourChoosen[points]==4){
+                colourSelect = new Color(0,255,0);              
+            }else if(colourChoosen[points]==5){
+                colourSelect = new Color(255,0,255);              
+            }else if(colourChoosen[points]==6){
+                colourSelect = new Color(0,255,135);             
+            }else if(colourChoosen[points]==7){
+                colourSelect = new Color(255,136,0);             
+            }else if(colourChoosen[points]==8){
+                colourSelect = new Color(0,161,255);             
+            }else if(colourChoosen[points]==9){
+                colourSelect = new Color(137,137,137);             
+            }
             points++;
             numBlocks++;
 
-            System.out.println((mX - currentSizeX / 2 + camX) + " " + (mY - currentSizeY / 2 + camY) + " " + currentSizeX + " " + currentSizeY);
+            System.out.println((mX - currentSizeX / 2 + camX) + " " + (mY - currentSizeY / 2 + camY) + " " + currentSizeX + " " + currentSizeY + " "+ colourNum);
         }
 
         // if a mouse button has been released
@@ -302,6 +412,43 @@ public class DrawingThing extends JComponent implements ActionListener {
             if (keyCode == KeyEvent.VK_ENTER) {
                 endDrawing = true;
                 System.out.println(numBlocks);
+            }
+            //colour stuff
+            if (keyCode == KeyEvent.VK_1) {
+                colourSelect = new Color(0,0,0);
+                colourNum = 1;
+            }
+            if (keyCode == KeyEvent.VK_2) {
+                colourSelect = new Color(255,0,0);
+                colourNum = 2;
+            }
+            if (keyCode == KeyEvent.VK_3) {
+                colourSelect = new Color(0,0,255);
+                colourNum = 3;
+            }
+            if (keyCode == KeyEvent.VK_4) {
+                colourSelect = new Color(0,255,0);
+                colourNum = 4;
+            }
+            if (keyCode == KeyEvent.VK_5) {
+                colourSelect = new Color(255,0,255);
+                colourNum = 5;
+            }
+            if (keyCode == KeyEvent.VK_6) {
+                colourSelect = new Color(0,255,135);
+                colourNum = 6;
+            }
+            if (keyCode == KeyEvent.VK_7) {
+                colourSelect = new Color(255,136,0);
+                colourNum = 7;
+            }
+            if (keyCode == KeyEvent.VK_8) {
+                colourSelect = new Color(0,161,255);
+                colourNum = 8;
+            }
+            if (keyCode == KeyEvent.VK_9) {
+                colourSelect = new Color(137,137,137);
+                colourNum = 9;
             }
 
 
