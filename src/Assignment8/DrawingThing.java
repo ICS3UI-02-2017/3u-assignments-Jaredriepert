@@ -38,7 +38,7 @@ public class DrawingThing extends JComponent implements ActionListener {
     Timer gameTimer;
     // YOUR GAME VARIABLES WOULD GO HERE
     int[] sizeX = new int[1000];
-    int[] sizeY = new int[1000];
+    int[] sizeY = new int[1000];   
     int currentSizeX = 10;
     int currentSizeY = 10;
     int mX = 0;
@@ -143,7 +143,7 @@ public class DrawingThing extends JComponent implements ActionListener {
         }
         g.setColor(Color.BLUE);
         g.fillRect(328 - camX, 272 - camY, 12, 15);
-        for (int i = 1; i < points; i++) {
+        for (int i = 0; i < points; i++) {
             if(colourChoosen[i]==1){
                 colourSelect = new Color(0,0,0);
               g.setColor(colourSelect);  
